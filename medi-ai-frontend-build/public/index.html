@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediAI - Healthcare AI Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-darker-custom sticky-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-heartbeat text-primary me-2"></i>MediAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#benefits">Benefits</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item ms-3">
+                        <a href="/login" class="btn btn-outline-primary btn-sm">Login</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a href="/register" class="btn btn-primary btn-sm">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section py-5 position-relative overflow-hidden">
+        <div class="gradient-bg"></div>
+        <div class="container position-relative z-3">
+            <div class="row align-items-center min-vh-75">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="display-3 fw-bold mb-4 text-gradient">
+                        AI-Powered Healthcare at Your Fingertips
+                    </h1>
+                    <p class="lead mb-4 text-light-secondary">
+                        Harness the power of artificial intelligence for intelligent disease prediction, medical image analysis, and personalized health insights.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="/register" class="btn btn-primary btn-lg px-5">Get Started</a>
+                        <a href="#features" class="btn btn-outline-primary btn-lg px-5">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="floating-card glass-effect p-5">
+                        <div class="text-center">
+                            <i class="fas fa-stethoscope fa-5x text-primary mb-4"></i>
+                            <h3 class="mb-3">Smart Health Assistant</h3>
+                            <p class="text-light-secondary">Get instant medical insights powered by advanced AI models</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold mb-3">Powerful Features</h2>
+                <p class="lead text-light-secondary">Everything you need for intelligent healthcare</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <a href="/predict" class="text-decoration-none">
+                        <div class="feature-card glass-effect p-4 h-100 text-center cursor-pointer hover-lift">
+                            <i class="fas fa-brain fa-3x text-primary mb-3"></i>
+                            <h4>Disease Prediction</h4>
+                            <p class="text-light-secondary">AI-powered disease prediction based on symptoms</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                    <a href="/xray" class="text-decoration-none">
+                        <div class="feature-card glass-effect p-4 h-100 text-center cursor-pointer hover-lift">
+                            <i class="fas fa-images fa-3x text-primary mb-3"></i>
+                            <h4>X-Ray Analysis</h4>
+                            <p class="text-light-secondary">Intelligent medical image analysis</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <a href="/chatbot" class="text-decoration-none">
+                        <div class="feature-card glass-effect p-4 h-100 text-center cursor-pointer hover-lift">
+                            <i class="fas fa-comments fa-3x text-primary mb-3"></i>
+                            <h4>AI Chatbot</h4>
+                            <p class="text-light-secondary">24/7 health information chatbot</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                    <a href="/dashboard" class="text-decoration-none">
+                        <div class="feature-card glass-effect p-4 h-100 text-center cursor-pointer hover-lift">
+                            <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                            <h4>Analytics</h4>
+                            <p class="text-light-secondary">Comprehensive health analytics dashboard</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="py-5 bg-darker-custom">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold mb-3">Why Choose MediAI</h2>
+                <p class="lead text-light-secondary">Experience the future of healthcare</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="benefit-item">
+                        <div class="benefit-icon mb-3">
+                            <i class="fas fa-lock text-primary fa-2x"></i>
+                        </div>
+                        <h4>Secure & Private</h4>
+                        <p class="text-light-secondary">Your health data is encrypted and protected with industry-leading security</p>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="benefit-item">
+                        <div class="benefit-icon mb-3">
+                            <i class="fas fa-bolt text-primary fa-2x"></i>
+                        </div>
+                        <h4>Fast & Accurate</h4>
+                        <p class="text-light-secondary">Get instant AI-powered analysis with high accuracy rates</p>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="benefit-item">
+                        <div class="benefit-icon mb-3">
+                            <i class="fas fa-users text-primary fa-2x"></i>
+                        </div>
+                        <h4>Expert Support</h4>
+                        <p class="text-light-secondary">Backed by medical professionals and AI experts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold mb-3">Our Services</h2>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <ul class="service-list">
+                        <li class="mb-4">
+                            <div class="d-flex gap-3">
+                                <div class="service-icon"><i class="fas fa-check text-primary"></i></div>
+                                <div>
+                                    <h5>Real-time Health Monitoring</h5>
+                                    <p class="text-light-secondary mb-0">Track your health metrics in real-time</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-4">
+                            <div class="d-flex gap-3">
+                                <div class="service-icon"><i class="fas fa-check text-primary"></i></div>
+                                <div>
+                                    <h5>Predictive Analytics</h5>
+                                    <p class="text-light-secondary mb-0">Get predictions based on your health data</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex gap-3">
+                                <div class="service-icon"><i class="fas fa-check text-primary"></i></div>
+                                <div>
+                                    <h5>Personal Health Reports</h5>
+                                    <p class="text-light-secondary mb-0">Comprehensive health insights and reports</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="glass-effect p-5">
+                        <h4 class="mb-4">Dashboard Preview</h4>
+                        <div class="placeholder-box mb-3">
+                            <i class="fas fa-chart-line text-primary fa-3x"></i>
+                        </div>
+                        <p class="text-light-secondary">Access your personalized dashboard with AI-powered insights</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-darker-custom">
+        <div class="container text-center">
+            <h2 class="display-4 fw-bold mb-4">Ready to Transform Your Healthcare?</h2>
+            <p class="lead mb-5 text-light-secondary">Join thousands of users who trust MediAI for their health insights</p>
+            <a href="register.html" class="btn btn-primary btn-lg px-5">Start Your Journey Today</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker-custom py-4 border-top border-secondary">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>MediAI</h5>
+                    <p class="text-light-secondary">AI-powered healthcare platform</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-light-secondary">About</a></li>
+                        <li><a href="#" class="text-decoration-none text-light-secondary">Privacy</a></li>
+                        <li><a href="#" class="text-decoration-none text-light-secondary">Terms</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <p class="text-light-secondary">support@mediAI.com</p>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-light-secondary">
+                <p>&copy; 2024 MediAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

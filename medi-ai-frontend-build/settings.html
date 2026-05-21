@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - MediAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-darker-custom sticky-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="dashboard.html">
+                <i class="fas fa-heartbeat text-primary me-2"></i>MediAI
+            </a>
+            <button class="navbar-toggler" type="button" id="sidebarToggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="ms-auto">
+                <div class="dropdown">
+                    <button class="btn btn-link text-decoration-none text-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle fa-2x"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                        <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="container-fluid">
+        <div class="row g-0">
+            <nav class="sidebar col-12 col-md-3 col-lg-2 p-3" id="sidebar">
+                <div class="nav flex-column">
+                    <a class="nav-link" href="dashboard.html">
+                        <i class="fas fa-chart-line me-2"></i>Dashboard
+                    </a>
+                    <a class="nav-link" href="predict.html">
+                        <i class="fas fa-brain me-2"></i>Disease Prediction
+                    </a>
+                    <a class="nav-link" href="xray.html">
+                        <i class="fas fa-images me-2"></i>X-Ray Analysis
+                    </a>
+                    <a class="nav-link" href="chatbot.html">
+                        <i class="fas fa-comments me-2"></i>Health Chatbot
+                    </a>
+                    <a class="nav-link" href="reports.html">
+                        <i class="fas fa-file-medical me-2"></i>Reports
+                    </a>
+                    <a class="nav-link" href="history.html">
+                        <i class="fas fa-history me-2"></i>History
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-12 col-md-9 col-lg-10 p-4">
+                <div class="mb-4">
+                    <h1 class="display-5 fw-bold mb-2">
+                        <i class="fas fa-cog text-primary me-2"></i>Settings
+                    </h1>
+                    <p class="text-light-secondary">Manage your preferences and account settings</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Settings Navigation -->
+                    <div class="col-lg-3">
+                        <div class="chart-container p-0">
+                            <div class="nav flex-column">
+                                <a class="nav-link border-bottom border-secondary active" href="#general" data-bs-toggle="tab">
+                                    <i class="fas fa-cog me-2"></i>General
+                                </a>
+                                <a class="nav-link border-bottom border-secondary" href="#notifications" data-bs-toggle="tab">
+                                    <i class="fas fa-bell me-2"></i>Notifications
+                                </a>
+                                <a class="nav-link border-bottom border-secondary" href="#privacy" data-bs-toggle="tab">
+                                    <i class="fas fa-lock me-2"></i>Privacy
+                                </a>
+                                <a class="nav-link border-bottom border-secondary" href="#security" data-bs-toggle="tab">
+                                    <i class="fas fa-shield-alt me-2"></i>Security
+                                </a>
+                                <a class="nav-link" href="#account" data-bs-toggle="tab">
+                                    <i class="fas fa-user me-2"></i>Account
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Content -->
+                    <div class="col-lg-9">
+                        <div class="tab-content">
+                            <!-- General -->
+                            <div class="tab-pane fade show active" id="general">
+                                <div class="chart-container">
+                                    <h5 class="mb-4">General Settings</h5>
+                                    
+                                    <div class="mb-4">
+                                        <label class="form-label">Theme</label>
+                                        <div class="btn-group w-100" role="group">
+                                            <input type="radio" class="btn-check" name="theme" id="darkMode" checked>
+                                            <label class="btn btn-outline-primary" for="darkMode">Dark</label>
+                                            <input type="radio" class="btn-check" name="theme" id="lightMode">
+                                            <label class="btn btn-outline-primary" for="lightMode">Light</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="language" class="form-label">Language</label>
+                                        <select class="form-select">
+                                            <option selected>English</option>
+                                            <option>Spanish</option>
+                                            <option>French</option>
+                                            <option>German</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="timezone" class="form-label">Timezone</label>
+                                        <select class="form-select">
+                                            <option selected>UTC-5 (Eastern)</option>
+                                            <option>UTC-6 (Central)</option>
+                                            <option>UTC-7 (Mountain)</option>
+                                            <option>UTC-8 (Pacific)</option>
+                                        </select>
+                                    </div>
+
+                                    <button class="btn btn-primary">Save Changes</button>
+                                </div>
+                            </div>
+
+                            <!-- Notifications -->
+                            <div class="tab-pane fade" id="notifications">
+                                <div class="chart-container">
+                                    <h5 class="mb-4">Notification Preferences</h5>
+                                    
+                                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="fw-bold mb-1">Email Notifications</p>
+                                            <p class="text-light-secondary small mb-0">Receive health alerts via email</p>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="fw-bold mb-1">Push Notifications</p>
+                                            <p class="text-light-secondary small mb-0">Get browser notifications</p>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="fw-bold mb-1">Report Reminders</p>
+                                            <p class="text-light-secondary small mb-0">Get reminders for health reports</p>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="fw-bold mb-1">Marketing Emails</p>
+                                            <p class="text-light-secondary small mb-0">Receive product updates</p>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox">
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-primary mt-4">Save Preferences</button>
+                                </div>
+                            </div>
+
+                            <!-- Privacy -->
+                            <div class="tab-pane fade" id="privacy">
+                                <div class="chart-container">
+                                    <h5 class="mb-4">Privacy Settings</h5>
+                                    
+                                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="fw-bold mb-1">Profile Visibility</p>
+                                            <p class="text-light-secondary small mb-0">Who can see your profile</p>
+                                        </div>
+                                        <select class="form-select w-auto">
+                                            <option>Private</option>
+                                            <option>Public</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="fw-bold mb-1">Share Data with Researchers</p>
+                                            <p class="text-light-secondary small mb-0">Help improve our AI models</p>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-info">
+                                        <small>Your data is always encrypted and never shared without permission.</small>
+                                    </div>
+
+                                    <button class="btn btn-primary">Save Privacy Settings</button>
+                                </div>
+                            </div>
+
+                            <!-- Security -->
+                            <div class="tab-pane fade" id="security">
+                                <div class="chart-container">
+                                    <h5 class="mb-4">Security Settings</h5>
+                                    
+                                    <div class="mb-4">
+                                        <label class="form-label">Change Password</label>
+                                        <input type="password" class="form-control mb-2" placeholder="Current password">
+                                        <input type="password" class="form-control mb-2" placeholder="New password">
+                                        <input type="password" class="form-control" placeholder="Confirm password">
+                                        <button class="btn btn-primary mt-3">Update Password</button>
+                                    </div>
+
+                                    <hr class="my-4 border-secondary">
+
+                                    <div class="mb-4">
+                                        <h6 class="mb-3">Two-Factor Authentication</h6>
+                                        <p class="text-light-secondary small mb-3">Add an extra layer of security to your account</p>
+                                        <button class="btn btn-outline-primary">Enable 2FA</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Account -->
+                            <div class="tab-pane fade" id="account">
+                                <div class="chart-container">
+                                    <h5 class="mb-4">Account Settings</h5>
+                                    
+                                    <div class="alert alert-warning mb-4">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        <strong>Danger Zone:</strong> These actions cannot be undone
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <p class="fw-bold mb-2">Export Your Data</p>
+                                        <p class="text-light-secondary small mb-3">Download a copy of your health data</p>
+                                        <button class="btn btn-outline-primary">
+                                            <i class="fas fa-download me-2"></i>Export Data
+                                        </button>
+                                    </div>
+
+                                    <hr class="my-4 border-secondary">
+
+                                    <div class="mb-4">
+                                        <p class="fw-bold mb-2">Delete Account</p>
+                                        <p class="text-light-secondary small mb-3">Permanently delete your account and all associated data</p>
+                                        <button class="btn btn-danger">
+                                            <i class="fas fa-trash me-2"></i>Delete Account
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Dark/Light mode toggle
+        document.getElementById('lightMode')?.addEventListener('change', function() {
+            document.body.classList.add('light-mode');
+            console.log('[v0] Light mode enabled');
+        });
+
+        document.getElementById('darkMode')?.addEventListener('change', function() {
+            document.body.classList.remove('light-mode');
+            console.log('[v0] Dark mode enabled');
+        });
+
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+        });
+    </script>
+</body>
+</html>
