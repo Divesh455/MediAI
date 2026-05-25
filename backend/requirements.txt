@@ -1,5 +1,6 @@
 fastapi
 uvicorn[standard]
+python-dotenv
 joblib
 pandas
 scikit-learn==1.8.0

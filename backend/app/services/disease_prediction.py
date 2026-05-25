@@ -19,6 +19,10 @@ def normalize_symptom(value: str) -> str:
     return value.strip().lower().replace(" ", "_")
 
 
+def format_symptom_label(value: str) -> str:
+    return value.replace("_", " ").replace("  ", " ").strip().title()
+
+
 model = joblib.load(MODEL_PATH)
 label_encoder = joblib.load(ENCODER_PATH)
 
@@ -45,6 +49,16 @@ def is_valid_symptom(symptom: str) -> bool:
 
 def get_symptom_names() -> list[str]:
     return list(dict.fromkeys(feature_names))
+
+
+def get_symptom_suggestions() -> list[dict[str, str]]:
+    return [
+        {
+            "value": symptom,
+            "label": format_symptom_label(symptom),
+        }
+        for symptom in get_symptom_names()
+    ]
 
 
 def predict_from_symptoms(symptoms: list[str]) -> dict[str, Any]:

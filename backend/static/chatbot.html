@@ -12,7 +12,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-darker-custom sticky-top shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="dashboard.html">
+            <a class="navbar-brand fw-bold" href="/dashboard">
                 <i class="fas fa-heartbeat text-primary me-2"></i>MediAI
             </a>
             <button class="navbar-toggler" type="button" id="sidebarToggle">
@@ -27,10 +27,10 @@
                         <i class="fas fa-user-circle fa-2x"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                        <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                        <li><a class="dropdown-item" href="/settings">Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                        <li><a class="dropdown-item" href="/">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -42,22 +42,22 @@
         <div class="row g-0">
             <nav class="sidebar col-12 col-md-3 col-lg-2 p-3" id="sidebar">
                 <div class="nav flex-column">
-                    <a class="nav-link" href="dashboard.html">
+                    <a class="nav-link" href="/dashboard">
                         <i class="fas fa-chart-line me-2"></i>Dashboard
                     </a>
-                    <a class="nav-link" href="predict.html">
+                    <a class="nav-link" href="/predict">
                         <i class="fas fa-brain me-2"></i>Disease Prediction
                     </a>
-                    <a class="nav-link" href="xray.html">
+                    <a class="nav-link" href="/xray">
                         <i class="fas fa-images me-2"></i>X-Ray Analysis
                     </a>
-                    <a class="nav-link active" href="chatbot.html">
+                    <a class="nav-link active" href="/chatbot">
                         <i class="fas fa-comments me-2"></i>Health Chatbot
                     </a>
-                    <a class="nav-link" href="reports.html">
+                    <a class="nav-link" href="/reports">
                         <i class="fas fa-file-medical me-2"></i>Reports
                     </a>
-                    <a class="nav-link" href="history.html">
+                    <a class="nav-link" href="/history">
                         <i class="fas fa-history me-2"></i>History
                     </a>
                 </div>
@@ -177,6 +177,117 @@
             return escapeHtml(text).replace(/\n/g, '<br>');
         }
 
+        function getSectionMeta(title) {
+            const normalized = title.toLowerCase();
+            if (normalized.includes('disease') || normalized.includes('summary')) {
+                return { className: 'summary' };
+            }
+            if (normalized.includes('confidence')) {
+                return { className: 'confidence' };
+            }
+            if (normalized.includes('symptom')) {
+                return { className: 'symptoms' };
+            }
+            if (normalized.includes('precaution') || normalized.includes('recommend') || normalized.includes('medicine')) {
+                return { className: 'recommendations' };
+            }
+            if (normalized.includes('disclaimer') || normalized.includes('warning')) {
+                return { className: 'disclaimer' };
+            }
+            return { className: 'info' };
+        }
+
+        function cleanSectionTitle(line) {
+            return line
+                .replace(/^#{1,6}\s*/, '')
+                .replace(/^[^A-Za-z0-9]+/, '')
+                .replace(/\*\*/g, '')
+                .replace(/:$/, '')
+                .trim();
+        }
+
+        function isSectionHeading(line) {
+            const cleaned = cleanSectionTitle(line).toLowerCase();
+            return (
+                /^#{1,6}\s+/.test(line) ||
+                /^(health summary|predicted disease|disease|confidence|key information|symptoms detected|symptoms mentioned|symptoms|recommended precautions|precautions|medicines|recommendations|disclaimer|warning)$/i.test(cleaned)
+            );
+        }
+
+        function renderInline(text) {
+            const escaped = escapeHtml(text);
+            return escaped
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/(\d+(?:\.\d+)?%)/g, '<span class="chat-confidence-value">$1</span>');
+        }
+
+        function renderSection(section) {
+            const meta = getSectionMeta(section.title);
+            const listItems = [];
+            const paragraphs = [];
+
+            section.lines.forEach(line => {
+                const cleaned = line.trim();
+                if (!cleaned) {
+                    return;
+                }
+
+                const bullet = cleaned.match(/^[-*•]\s+(.*)$/);
+                if (bullet) {
+                    listItems.push(`<li>${renderInline(bullet[1])}</li>`);
+                } else {
+                    paragraphs.push(`<p>${renderInline(cleaned)}</p>`);
+                }
+            });
+
+            const body = [
+                ...paragraphs,
+                listItems.length ? `<ul>${listItems.join('')}</ul>` : '',
+            ].join('');
+
+            return `
+                <section class="chat-response-section ${meta.className}">
+                    <h6>${escapeHtml(section.title)}</h6>
+                    <div class="chat-section-body">${body || '<p>No details provided.</p>'}</div>
+                </section>
+            `;
+        }
+
+        function buildStructuredResponse(text) {
+            const lines = String(text || '').split(/\r?\n/);
+            const sections = [];
+            let currentSection = { title: 'Health Summary', lines: [] };
+
+            // Formatting logic: split chatbot markdown/plain text into card sections.
+            // Known headings become separate visual blocks; bullets become clean lists.
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (!trimmed) {
+                    currentSection.lines.push('');
+                    return;
+                }
+
+                if (isSectionHeading(trimmed)) {
+                    if (currentSection.lines.some(Boolean)) {
+                        sections.push(currentSection);
+                    }
+                    currentSection = { title: cleanSectionTitle(trimmed), lines: [] };
+                } else {
+                    currentSection.lines.push(trimmed);
+                }
+            });
+
+            if (currentSection.lines.some(Boolean) || !sections.length) {
+                sections.push(currentSection);
+            }
+
+            return `
+                <article class="chat-response-card">
+                    ${sections.map(renderSection).join('')}
+                </article>
+            `;
+        }
+
         // Add message to chat
         function addMessage(text, isBot = false) {
             const chatMessages = document.getElementById('chatMessages');
@@ -184,12 +295,14 @@
             messageDiv.className = 'mb-3';
 
             if (isBot) {
+                const botContent = text === 'Thinking...'
+                    ? `<div class="glass-effect p-3 flex-grow-1"><p class="mb-0"><i class="fas fa-spinner fa-spin me-2"></i>${formatMessage(text)}</p></div>`
+                    : `<div class="flex-grow-1">${buildStructuredResponse(text)}</div>`;
+
                 messageDiv.innerHTML = `
                     <div class="d-flex gap-2">
                         <i class="fas fa-robot text-primary fa-2x flex-shrink-0"></i>
-                        <div class="glass-effect p-3 flex-grow-1">
-                            <p class="mb-0">${formatMessage(text)}</p>
-                        </div>
+                        ${botContent}
                     </div>
                 `;
             } else {
@@ -226,7 +339,7 @@
             submitBtn.disabled = true;
 
             try {
-                const response = await fetch('http://localhost:8000/chat', {
+                const response = await fetch('/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message })
@@ -252,7 +365,7 @@
         // Handle suggestion buttons
         document.querySelectorAll('.suggestion-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                document.getElementById('chatInput').value = this.textContent;
+                document.getElementById('chatInput').value = this.textContent.trim();
                 document.getElementById('chatForm').dispatchEvent(new Event('submit'));
             });
         });

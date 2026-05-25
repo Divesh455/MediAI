@@ -3,7 +3,20 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ModuleNotFoundError:
+    def load_dotenv(path: Path) -> None:
+        if not path.exists():
+            return
+
+        for line in path.read_text(encoding="utf-8").splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#") or "=" not in stripped:
+                continue
+
+            name, value = stripped.split("=", 1)
+            os.environ.setdefault(name.strip(), value.strip().strip('"').strip("'"))
 
 
 BASE_DIR = Path(__file__).resolve().parents[3]
@@ -42,6 +55,7 @@ def get_env_int(name: str, default: int) -> int:
 
 
 APP_TITLE = os.getenv("APP_TITLE", "MediVision AI API")
+FRONTEND_DIR = get_env_path("FRONTEND_DIR", BACKEND_DIR / "static")
 
 MODEL_DIR = get_env_path("MODEL_DIR", BASE_DIR / "Model")
 
