@@ -71,75 +71,8 @@
 
                 <!-- Timeline -->
                 <div class="chart-container">
-                    <div class="timeline">
-                        <!-- Today -->
-                        <div class="timeline-item">
-                            <div class="timeline-date text-primary fw-bold mb-3">Today</div>
-                            
-                            <div class="timeline-entry mb-3">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <p class="fw-bold mb-1">Disease Prediction</p>
-                                    <p class="text-light-secondary small mb-2">Analyzed symptoms: fever, cough, headache</p>
-                                    <small class="text-light-secondary">10:30 AM</small>
-                                </div>
-                            </div>
-
-                            <div class="timeline-entry mb-3">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <p class="fw-bold mb-1">Chatbot Conversation</p>
-                                    <p class="text-light-secondary small mb-2">Asked about cold symptoms</p>
-                                    <small class="text-light-secondary">9:15 AM</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Yesterday -->
-                        <div class="timeline-item">
-                            <div class="timeline-date text-primary fw-bold mb-3">Yesterday</div>
-                            
-                            <div class="timeline-entry mb-3">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <p class="fw-bold mb-1">X-Ray Analysis</p>
-                                    <p class="text-light-secondary small mb-2">Chest X-Ray uploaded and analyzed</p>
-                                    <small class="text-light-secondary">2:45 PM</small>
-                                </div>
-                            </div>
-
-                            <div class="timeline-entry">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <p class="fw-bold mb-1">Health Report Generated</p>
-                                    <p class="text-light-secondary small mb-2">Weekly summary created</p>
-                                    <small class="text-light-secondary">11:00 AM</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Last Week -->
-                        <div class="timeline-item">
-                            <div class="timeline-date text-primary fw-bold mb-3">Last Week</div>
-                            
-                            <div class="timeline-entry mb-3">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <p class="fw-bold mb-1">Profile Updated</p>
-                                    <p class="text-light-secondary small mb-2">Personal information modified</p>
-                                    <small class="text-light-secondary">May 15, 2024</small>
-                                </div>
-                            </div>
-
-                            <div class="timeline-entry">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <p class="fw-bold mb-1">Account Created</p>
-                                    <p class="text-light-secondary small mb-2">Welcome to MediAI</p>
-                                    <small class="text-light-secondary">May 10, 2024</small>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="timeline" id="historyTimeline">
+                        <p class="text-light-secondary mb-0">Loading your activity...</p>
                     </div>
                 </div>
             </main>
@@ -152,6 +85,53 @@
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('show');
         });
+
+        function escapeHtml(value) {
+            return String(value || '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[char]));
+        }
+
+        async function loadHistory() {
+            const timeline = document.getElementById('historyTimeline');
+            try {
+                const response = await fetch('/activity/history');
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                    return;
+                }
+                const data = await response.json();
+                if (!data.items.length) {
+                    timeline.innerHTML = '<p class="text-light-secondary mb-0">No activity yet. Use the chatbot or disease prediction to create history.</p>';
+                    return;
+                }
+
+                timeline.innerHTML = `
+                    <div class="timeline-item">
+                        <div class="timeline-date text-primary fw-bold mb-3">Recent Activity</div>
+                        ${data.items.map(item => `
+                            <div class="timeline-entry mb-3">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <p class="fw-bold mb-1">${escapeHtml(item.title)}</p>
+                                    <p class="text-light-secondary small mb-2">${escapeHtml(item.description)}</p>
+                                    <small class="text-light-secondary">${escapeHtml(item.display_time)}</small>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('[history] Failed to load history:', error);
+                timeline.innerHTML = '<p class="text-light-secondary mb-0">Could not load activity history.</p>';
+            }
+        }
+
+        loadHistory();
     </script>
 </body>
 </html>

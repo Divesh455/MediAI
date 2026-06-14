@@ -7,9 +7,11 @@ from fastapi.staticfiles import StaticFiles
 from backend.app.api.frontend import router as frontend_router
 from backend.app.api.routes import router
 from backend.app.core.config import APP_TITLE, FRONTEND_DIR
+from backend.app.db import init_db
 
 
 def create_app() -> FastAPI:
+    init_db()
     app = FastAPI(title=APP_TITLE)
 
     app.add_middleware(

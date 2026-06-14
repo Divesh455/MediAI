@@ -87,7 +87,7 @@
             <main class="col-12 col-md-9 col-lg-10 p-4">
                 <!-- Welcome Section -->
                 <div class="mb-4">
-                    <h1 class="display-5 fw-bold mb-2">Welcome back, John! 👋</h1>
+                    <h1 class="display-5 fw-bold mb-2" id="welcomeTitle">Welcome back</h1>
                     <p class="text-light-secondary">Here's your health overview for today</p>
                 </div>
 
@@ -97,48 +97,36 @@
                         <div class="dashboard-card">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <p class="stat-label mb-1">Heart Rate</p>
-                                    <p class="stat-value mb-0">72 bpm</p>
+                                    <p class="stat-label mb-1">Your Conversations</p>
+                                    <p class="stat-value mb-0" id="totalConversations">0</p>
                                 </div>
-                                <i class="fas fa-heart text-danger fa-2x opacity-50"></i>
+                                <i class="fas fa-comments text-info fa-2x opacity-50"></i>
                             </div>
-                            <small class="text-success">+2 from yesterday</small>
+                            <small class="text-light-secondary">Your chat sessions</small>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="dashboard-card">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <p class="stat-label mb-1">Blood Pressure</p>
-                                    <p class="stat-value mb-0">120/80</p>
+                                    <p class="stat-label mb-1">Your Messages</p>
+                                    <p class="stat-value mb-0" id="totalMessages">0</p>
                                 </div>
-                                <i class="fas fa-tint text-info fa-2x opacity-50"></i>
+                                <i class="fas fa-message text-warning fa-2x opacity-50"></i>
                             </div>
-                            <small class="text-success">Normal</small>
+                            <small class="text-light-secondary">Your saved messages</small>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="dashboard-card">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <p class="stat-label mb-1">Steps</p>
-                                    <p class="stat-value mb-0">8,432</p>
+                                    <p class="stat-label mb-1">Your Activity</p>
+                                    <p class="stat-value mb-0" id="recentActivityCount">0</p>
                                 </div>
-                                <i class="fas fa-shoe-prints text-warning fa-2x opacity-50"></i>
+                                <i class="fas fa-clock-rotate-left text-success fa-2x opacity-50"></i>
                             </div>
-                            <small class="text-warning">Target: 10,000</small>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="dashboard-card">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <p class="stat-label mb-1">Sleep</p>
-                                    <p class="stat-value mb-0">7.5h</p>
-                                </div>
-                                <i class="fas fa-moon text-primary fa-2x opacity-50"></i>
-                            </div>
-                            <small class="text-success">Good</small>
+                            <small class="text-light-secondary">Latest actions</small>
                         </div>
                     </div>
                 </div>
@@ -147,20 +135,17 @@
                 <div class="row g-3 mb-4">
                     <div class="col-lg-6">
                         <div class="chart-container">
-                            <h5 class="mb-3">Heart Rate Trend</h5>
-                            <div id="heartRateChart" style="height: 300px; background: rgba(0,212,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                <p class="text-light-secondary">Chart will load here</p>
+                            <h5 class="mb-3">Your Recent Activity</h5>
+                            <div id="heartRateChart" class="dashboard-activity-panel">
+                                <p class="text-light-secondary">No recent activity yet</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="chart-container">
-                            <h5 class="mb-3">Health Score</h5>
-                            <div id="healthChart" style="height: 300px; background: rgba(0,212,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                <div class="text-center">
-                                    <p class="stat-value mb-1">78/100</p>
-                                    <p class="text-light-secondary">Excellent</p>
-                                </div>
+                            <h5 class="mb-3">Your Account Summary</h5>
+                            <div id="accountSummary" class="dashboard-summary-panel">
+                                <p class="text-light-secondary mb-0">Loading your account summary...</p>
                             </div>
                         </div>
                     </div>
@@ -172,13 +157,13 @@
                         <div class="chart-container">
                             <h5 class="mb-3">Quick Actions</h5>
                             <div class="d-grid gap-2">
-                                <a href="predict.html" class="btn btn-outline-primary d-flex align-items-center gap-2">
+                                <a href="/predict" class="btn btn-outline-primary d-flex align-items-center gap-2">
                                     <i class="fas fa-brain"></i>Run Health Prediction
                                 </a>
-                                <a href="xray.html" class="btn btn-outline-primary d-flex align-items-center gap-2">
+                                <a href="/xray" class="btn btn-outline-primary d-flex align-items-center gap-2">
                                     <i class="fas fa-images"></i>Upload X-Ray
                                 </a>
-                                <a href="chatbot.html" class="btn btn-outline-primary d-flex align-items-center gap-2">
+                                <a href="/chatbot" class="btn btn-outline-primary d-flex align-items-center gap-2">
                                     <i class="fas fa-comments"></i>Chat with Assistant
                                 </a>
                             </div>
@@ -186,15 +171,11 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="chart-container">
-                            <h5 class="mb-3">Recommendations</h5>
-                            <div class="alert alert-info mb-2">
-                                <small><i class="fas fa-info-circle me-2"></i>Increase daily water intake</small>
-                            </div>
-                            <div class="alert alert-warning mb-2">
-                                <small><i class="fas fa-exclamation-triangle me-2"></i>Morning exercise needed</small>
-                            </div>
-                            <div class="alert alert-success mb-0">
-                                <small><i class="fas fa-check-circle me-2"></i>Great sleep schedule!</small>
+                            <h5 class="mb-3">Latest Items</h5>
+                            <div id="latestItems">
+                                <div class="alert alert-info mb-0">
+                                    <small><i class="fas fa-info-circle me-2"></i>Activity will appear here after you use the assistant.</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,6 +202,123 @@
                 }
             });
         });
+
+        function renderActivity(items) {
+            const activityPanel = document.getElementById('heartRateChart');
+            const latestItems = document.getElementById('latestItems');
+            const fallback = '<p class="text-light-secondary mb-0">No recent activity yet</p>';
+
+            if (!items.length) {
+                activityPanel.innerHTML = fallback;
+                latestItems.innerHTML = '<div class="alert alert-info mb-0"><small><i class="fas fa-info-circle me-2"></i>Activity will appear here after you use the assistant.</small></div>';
+                return;
+            }
+
+            const html = items.slice(0, 5).map(item => `
+                <div class="timeline-entry mb-3">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <p class="fw-bold mb-1">${escapeHtml(item.title)}</p>
+                        <p class="text-light-secondary small mb-1">${escapeHtml(item.description)}</p>
+                        <small class="text-light-secondary">${escapeHtml(item.display_time)}</small>
+                    </div>
+                </div>
+            `).join('');
+
+            activityPanel.classList.add('has-activity');
+            activityPanel.innerHTML = `<div class="dashboard-activity-list">${html}</div>`;
+            latestItems.innerHTML = items.slice(0, 3).map(item => `
+                <div class="alert alert-info mb-2">
+                    <small><i class="fas fa-info-circle me-2"></i>${escapeHtml(item.title)}: ${escapeHtml(item.description)}</small>
+                </div>
+            `).join('');
+        }
+
+        function renderAccountSummary(data, stats) {
+            const user = data.user || {};
+            const latestConversation = data.latest_conversation || {};
+            const accountSummary = document.getElementById('accountSummary');
+
+            accountSummary.innerHTML = `
+                <div class="dashboard-summary-grid">
+                    <div class="dashboard-summary-user">
+                        <div class="summary-avatar">${escapeHtml((user.first_name || 'U').charAt(0).toUpperCase())}</div>
+                        <div>
+                            <p class="fw-bold mb-1">${escapeHtml(`${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Logged in user')}</p>
+                            <p class="text-light-secondary small mb-0">${escapeHtml(user.email || 'No email found')}</p>
+                        </div>
+                    </div>
+                    <div class="summary-row">
+                        <span>Member Since</span>
+                        <strong>${escapeHtml(user.member_since || 'Unknown')}</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Your Conversations</span>
+                        <strong>${formatStatNumber(stats.total_conversations ?? 0)}</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Your Messages</span>
+                        <strong>${formatStatNumber(stats.total_messages ?? 0)}</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Latest Conversation</span>
+                        <strong>${escapeHtml(latestConversation.title || 'No conversations yet')}</strong>
+                    </div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(value) {
+            return String(value || '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[char]));
+        }
+
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch('/dashboard/stats', { credentials: 'same-origin' });
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                    return;
+                }
+                if (!response.ok) {
+                    throw new Error(`Dashboard stats failed with status ${response.status}`);
+                }
+                const data = await response.json();
+                const stats = data.stats || {};
+                const totalConversations = stats.total_conversations ?? stats.totalConversations ?? 0;
+                const totalMessages = stats.total_messages ?? stats.totalMessages ?? 0;
+                const recentActivityCount = stats.recent_activity_count ?? stats.recentActivityCount ?? 0;
+
+                console.info('[dashboard] stats loaded', stats);
+                document.getElementById('welcomeTitle').textContent = `Welcome back, ${(data.user && data.user.first_name) || 'User'}!`;
+                document.getElementById('totalConversations').textContent = formatStatNumber(totalConversations);
+                document.getElementById('totalMessages').textContent = formatStatNumber(totalMessages);
+                document.getElementById('recentActivityCount').textContent = formatStatNumber(recentActivityCount);
+                renderAccountSummary(data, {
+                    total_conversations: totalConversations,
+                    total_messages: totalMessages,
+                });
+                renderActivity(data.recent_activity || []);
+            } catch (error) {
+                console.error('[dashboard] Failed to load stats:', error);
+                document.getElementById('totalConversations').textContent = '0';
+                document.getElementById('totalMessages').textContent = '0';
+                document.getElementById('recentActivityCount').textContent = '0';
+                document.getElementById('accountSummary').innerHTML = '<p class="text-light-secondary mb-0">Could not load your account summary.</p>';
+                renderActivity([]);
+            }
+        }
+
+        function formatStatNumber(value) {
+            return Number(value || 0).toLocaleString();
+        }
+
+        loadDashboardStats();
     </script>
 </body>
 </html>

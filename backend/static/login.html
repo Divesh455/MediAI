@@ -91,10 +91,25 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            console.log('[v0] Login attempt:', email);
-            // TODO: Connect to FastAPI backend
-            // For now, redirect to dashboard
-            window.location.href = 'dashboard.html';
+            const submitButton = document.querySelector('#loginForm button[type="submit"]');
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password }),
+                });
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.detail || 'Login failed.');
+                }
+                window.location.href = '/dashboard';
+            } catch (error) {
+                alert(error.message || 'Login failed.');
+            } finally {
+                submitButton.disabled = false;
+            }
         });
     </script>
 </body>

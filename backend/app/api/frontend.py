@@ -3,9 +3,11 @@ from __future__ import annotations
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import FileResponse
+from fastapi import Request
+from fastapi.responses import FileResponse, RedirectResponse
 
 from backend.app.core.config import FRONTEND_DIR
+from backend.app.services.auth import get_current_user_optional
 
 
 router = APIRouter()
@@ -22,6 +24,8 @@ PAGE_FILES = {
     "login": "login.html",
     "register": "register.html",
 }
+
+PUBLIC_PAGES = {"login", "register"}
 
 ASSET_EXTENSIONS = {
     ".ico",
@@ -41,13 +45,20 @@ def html_response(filename: str) -> FileResponse:
 
 
 @router.get("/", include_in_schema=False)
-def index() -> FileResponse:
-    return html_response("index.html")
+def index(request: Request):
+    if get_current_user_optional(request):
+        return RedirectResponse("/dashboard", status_code=302)
+    return RedirectResponse("/login", status_code=302)
 
 
 @router.get("/{page_name}", include_in_schema=False)
-def page(page_name: str) -> FileResponse:
+def page(page_name: str, request: Request):
     if page_name in PAGE_FILES:
+        user = get_current_user_optional(request)
+        if page_name not in PUBLIC_PAGES and not user:
+            return RedirectResponse("/login", status_code=302)
+        if page_name in PUBLIC_PAGES and user:
+            return RedirectResponse("/dashboard", status_code=302)
         return html_response(PAGE_FILES[page_name])
 
     asset_path = FRONTEND_DIR / page_name
@@ -58,9 +69,14 @@ def page(page_name: str) -> FileResponse:
 
 
 @router.get("/{page_name}.html", include_in_schema=False)
-def legacy_page(page_name: str) -> FileResponse:
+def legacy_page(page_name: str, request: Request):
     if page_name == "index":
-        return html_response("index.html")
+        return index(request)
     if page_name in PAGE_FILES:
+        user = get_current_user_optional(request)
+        if page_name not in PUBLIC_PAGES and not user:
+            return RedirectResponse("/login", status_code=302)
+        if page_name in PUBLIC_PAGES and user:
+            return RedirectResponse("/dashboard", status_code=302)
         return html_response(PAGE_FILES[page_name])
     raise HTTPException(status_code=404, detail="Page not found")

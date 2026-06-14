@@ -38,25 +38,41 @@ SYSTEM_PROMPT = (
 )
 
 
-def build_gemini_payload(message: str) -> dict:
+def build_gemini_contents(payload: ChatRequest) -> list[dict]:
+    contents = []
+
+    for item in payload.history[-12:]:
+        contents.append(
+            {
+                "role": "model" if item.role == "assistant" else "user",
+                "parts": [{"text": item.content}],
+            }
+        )
+
+    contents.append(
+        {
+            "role": "user",
+            "parts": [
+                {
+                    "text": (
+                        "User health question:\n"
+                        f"{payload.message}\n\n"
+                        "Give a helpful, cautious, easy-to-understand answer. "
+                        "If this is a follow-up, use the previous conversation context."
+                    )
+                }
+            ],
+        }
+    )
+    return contents
+
+
+def build_gemini_payload(payload: ChatRequest) -> dict:
     return {
         "system_instruction": {
             "parts": [{"text": SYSTEM_PROMPT}],
         },
-        "contents": [
-            {
-                "role": "user",
-                "parts": [
-                    {
-                        "text": (
-                            "User health question:\n"
-                            f"{message}\n\n"
-                            "Give a helpful, cautious, easy-to-understand answer."
-                        )
-                    }
-                ],
-            }
-        ],
+        "contents": build_gemini_contents(payload),
         "generationConfig": {
             "temperature": GEMINI_TEMPERATURE,
             "maxOutputTokens": GEMINI_MAX_OUTPUT_TOKENS,
@@ -77,7 +93,7 @@ def extract_gemini_text(response_data: dict) -> str:
     return "\n".join(text_parts).strip()
 
 
-def call_gemini(message: str) -> ChatResponse:
+def call_gemini(payload: ChatRequest) -> ChatResponse:
     api_key = get_gemini_api_key()
     if not api_key:
         raise HTTPException(
@@ -89,7 +105,7 @@ def call_gemini(message: str) -> ChatResponse:
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
     request = Request(
         url,
-        data=json.dumps(build_gemini_payload(message)).encode("utf-8"),
+        data=json.dumps(build_gemini_payload(payload)).encode("utf-8"),
         headers={"Content-Type": "application/json"},
         method="POST",
     )
@@ -182,7 +198,7 @@ def get_chat_response(payload: ChatRequest) -> ChatResponse:
     # Gemini connection fix: use the key loaded from backend/.env and call the
     # Gemini REST API directly, avoiding the previous LangChain dependency blocker.
     try:
-        return call_gemini(payload.message)
+        return call_gemini(payload)
     except HTTPException as exc:
         return get_fallback_response(payload.message, exc.detail)
     except Exception as exc:

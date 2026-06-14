@@ -138,25 +138,10 @@
                 <div class="mt-4">
                     <h5 class="mb-3">Recent Analyses</h5>
                     <div class="row g-3">
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-12">
                             <div class="dashboard-card">
-                                <p class="small text-light-secondary mb-2">Chest X-Ray - 2 hours ago</p>
-                                <p class="fw-bold mb-2">Normal findings</p>
-                                <span class="badge bg-success">Clear</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="dashboard-card">
-                                <p class="small text-light-secondary mb-2">Bone X-Ray - 1 day ago</p>
-                                <p class="fw-bold mb-2">Minor fracture detected</p>
-                                <span class="badge bg-warning">Review</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="dashboard-card">
-                                <p class="small text-light-secondary mb-2">Lung X-Ray - 3 days ago</p>
-                                <p class="fw-bold mb-2">Pneumonia suspected</p>
-                                <span class="badge bg-danger">Alert</span>
+                                <p class="fw-bold mb-2">No X-Ray analyses yet</p>
+                                <p class="text-light-secondary small mb-0">Real analysis results will appear here after an X-Ray model endpoint is connected.</p>
                             </div>
                         </div>
                     </div>
@@ -253,27 +238,9 @@
             analyzeBtn.disabled = true;
             analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Analyzing...';
 
-            try {
-                // TODO: Connect to FastAPI /analyze-xray endpoint
-                // const formData = new FormData();
-                // formData.append('file', imageInput.files[0]);
-                // formData.append('type', imageType);
-
-                // Mock response
-                const results = {
-                    confidence: 0.92,
-                    findings: ['No acute abnormality', 'Normal cardiac silhouette', 'Clear lungs'],
-                    recommendation: 'No further action needed'
-                };
-
-                displayResults(results);
-            } catch (error) {
-                console.error('[v0] Analysis error:', error);
-                alert('Error analyzing image');
-            } finally {
-                analyzeBtn.disabled = false;
-                analyzeBtn.innerHTML = '<i class="fas fa-brain me-2"></i>Analyze Image';
-            }
+            alert('X-Ray analysis is not connected yet. Add a real /analyze-xray backend endpoint before enabling this feature.');
+            analyzeBtn.disabled = false;
+            analyzeBtn.innerHTML = '<i class="fas fa-brain me-2"></i>Analyze Image';
         });
 
         function displayResults(results) {

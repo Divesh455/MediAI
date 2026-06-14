@@ -81,7 +81,7 @@ document.querySelectorAll('.sidebar .nav-link').forEach(link => {
 
 // ===== API Request Wrapper =====
 class MediAIApi {
-    constructor(baseUrl = 'http://localhost:8000') {
+    constructor(baseUrl = '') {
         this.baseUrl = baseUrl;
     }
 
@@ -132,6 +132,26 @@ class MediAIApi {
 
 // Create global API instance
 window.mediaiApi = new MediAIApi();
+
+// ===== Auth Helpers =====
+async function logout() {
+    try {
+        await fetch('/auth/logout', { method: 'POST' });
+    } catch (error) {
+        console.error('[auth] Logout failed:', error);
+    } finally {
+        window.location.href = '/login';
+    }
+}
+
+document.querySelectorAll('a').forEach(link => {
+    if (link.textContent.trim().toLowerCase() === 'logout') {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            logout();
+        });
+    }
+});
 
 // ===== Form Validation Helper =====
 function validateForm(formElement) {

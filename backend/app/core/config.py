@@ -58,6 +58,9 @@ APP_TITLE = os.getenv("APP_TITLE", "MediVision AI API")
 FRONTEND_DIR = get_env_path("FRONTEND_DIR", BACKEND_DIR / "static")
 
 MODEL_DIR = get_env_path("MODEL_DIR", BASE_DIR / "Model")
+DATABASE_PATH = get_env_path("DATABASE_PATH", BACKEND_DIR / "mediai.db")
+SESSION_COOKIE_NAME = os.getenv("SESSION_COOKIE_NAME", "mediai_session")
+SESSION_MAX_AGE_SECONDS = get_env_int("SESSION_MAX_AGE_SECONDS", 60 * 60 * 24 * 7)
 
 MODEL_PATH = get_env_path("DISEASE_MODEL_PATH", MODEL_DIR / "disease_prediction_pipeline.pkl")
 ENCODER_PATH = get_env_path("LABEL_ENCODER_PATH", MODEL_DIR / "label_encoder.pkl")
