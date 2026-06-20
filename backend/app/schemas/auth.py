@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import date
+
 from pydantic import BaseModel, EmailStr, Field, validator
 
 
@@ -35,5 +37,41 @@ class UserResponse(BaseModel):
     phone: str | None = ""
 
 
+class ProfileUpdateRequest(BaseModel):
+    name: str | None = Field(default=None, max_length=160)
+    first_name: str | None = Field(default=None, alias="firstName", max_length=80)
+    last_name: str | None = Field(default=None, alias="lastName", max_length=80)
+    email: EmailStr
+    phone: str | None = Field(default="", max_length=40)
+    gender: str | None = Field(default="", max_length=40)
+    dob: date | None = None
+    address: str | None = Field(default="", max_length=255)
+
+
+class ProfileResponse(BaseModel):
+    id: int
+    name: str
+    first_name: str
+    last_name: str
+    email: str
+    phone: str | None = ""
+    gender: str | None = ""
+    dob: str | None = ""
+    address: str | None = ""
+    profile_image: str | None = ""
+
+
+class ProfileMutationResponse(BaseModel):
+    message: str
+    profile: ProfileResponse
+
+
+class ProfilePhotoUploadResponse(BaseModel):
+    message: str
+    profile_image: str
+    profile: ProfileResponse
+
+
 class AuthResponse(BaseModel):
+    token: str | None = None
     user: UserResponse

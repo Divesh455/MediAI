@@ -86,14 +86,6 @@
                     <a href="/login" class="text-decoration-none text-primary fw-bold">Sign in here</a>
                 </p>
             </div>
-
-            <hr class="my-4 border-secondary">
-
-            <div class="d-grid gap-2">
-                <button type="button" class="btn btn-outline-primary">
-                    <i class="fab fa-google me-2"></i>Sign up with Google
-                </button>
-            </div>
         </div>
     </div>
 
@@ -151,6 +143,8 @@
                         : result.detail || 'Registration failed.';
                     throw new Error(message);
                 }
+                localStorage.setItem('token', result.token || '');
+                localStorage.setItem('user_id', String(result.user?.id || ''));
                 window.location.href = '/dashboard';
             } catch (error) {
                 alert(error.message || 'Registration failed.');

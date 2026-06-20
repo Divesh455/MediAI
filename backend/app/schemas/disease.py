@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field, validator
 
-from backend.app.services.disease_prediction import is_valid_symptom, normalize_symptom
+from ..services.disease_prediction import is_valid_symptom, normalize_symptom
 
 
 class DiseasePredictionRequest(BaseModel):

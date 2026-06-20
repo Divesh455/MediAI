@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body class="bg-dark text-light">
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-darker-custom sticky-top shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="/dashboard">
@@ -20,18 +17,18 @@
             <button class="navbar-toggler" type="button" id="sidebarToggle">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="ms-auto">
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <button class="btn btn-link text-decoration-none text-light" id="themeToggle" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-moon fa-lg"></i>
+                </button>
                 <div class="dropdown">
-                    <button class="btn btn-link text-decoration-none text-light dropdown-toggle" type="button"
-                        data-bs-toggle="dropdown">
+                    <button class="btn btn-link text-decoration-none text-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         <i class="fas fa-user-circle fa-2x"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
                         <li><a class="dropdown-item" href="/settings">Settings</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                        <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/">Logout</a></li>
                     </ul>
                 </div>
@@ -39,7 +36,6 @@
         </div>
     </nav>
 
-    <!-- Sidebar -->
     <div class="container-fluid">
         <div class="row g-0">
             <nav class="sidebar col-12 col-md-3 col-lg-2 p-3" id="sidebar">
@@ -65,134 +61,171 @@
                 </div>
             </nav>
 
-            <!-- Main Content -->
-            <main class="col-12 col-md-9 col-lg-10 p-4">
-                <div class="mb-4">
-                    <h1 class="display-5 fw-bold mb-2">
-                        <i class="fas fa-file-medical text-primary me-2"></i>Health Reports
-                    </h1>
-                    <p class="text-light-secondary">View and download your medical reports</p>
-                </div>
+            <main class="col-12 col-md-9 col-lg-10 p-4 reports-page">
+                <section class="dashboard-card report-builder">
+                    <div class="report-builder-header">
+                        <div>
+                            <h1 class="display-5 fw-bold mb-2 report-builder-title">
+                                <i class="fas fa-file-medical text-primary me-2"></i>Health Reports
+                            </h1>
+                            <p class="report-builder-subtitle">
+                                Generate a consolidated medical-style summary across predictions, x-rays, and chat consultations.
+                            </p>
+                        </div>
+                        <div class="report-chip">
+                            <i class="fas fa-lock me-2"></i>Private, date-filtered summary
+                        </div>
+                    </div>
 
-                <!-- Filters -->
-                <div class="row g-3 mb-4">
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" placeholder="Search reports...">
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-select">
-                            <option value="">All Types</option>
-                            <option value="prediction">Prediction</option>
-                            <option value="xray">X-Ray</option>
-                            <option value="lab">Lab Results</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <input id="reportDate" type="date" class="form-control">
-                    </div>
-                </div>
-
-                <!-- Reports List -->
-                <div id="reportsList" class="space-y-3">
-                    <div class="dashboard-card">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="bg-primary bg-opacity-25 p-3 rounded">
-                                        <i class="fas fa-file-pdf text-primary fa-2x"></i>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-1">No reports available</h6>
-                                        <p class="text-light-secondary small mb-0">Reports will appear here after report
-                                            generation is connected to the database.</p>
-                                    </div>
-                                </div>
+                    <div class="alert alert-warning medical-disclaimer mb-3">
+                        <div class="d-flex align-items-start gap-3">
+                            <i class="fas fa-triangle-exclamation fa-lg mt-1"></i>
+                            <div>
+                                <p class="fw-bold mb-2">Medical Disclaimer</p>
+                                <p class="mb-0">
+                                    This report is generated by AI and should not be considered a medical diagnosis. Please consult a qualified healthcare professional.
+                                </p>
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    <div class="report-date-grid mb-3">
+                        <div>
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input id="startDate" type="date" class="form-control">
+                        </div>
+                        <div>
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input id="endDate" type="date" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="report-actions">
+                        <button type="button" class="btn btn-primary" id="generateReportBtn">
+                            <i class="fas fa-wand-magic-sparkles me-2"></i>Generate Report
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" id="downloadPdfBtn" disabled>
+                            <i class="fas fa-file-pdf me-2"></i>Download PDF
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" id="downloadDocxBtn" disabled>
+                            <i class="fas fa-file-word me-2"></i>Download DOCX
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" id="printReportBtn" disabled>
+                            <i class="fas fa-print me-2"></i>Print Report
+                        </button>
+                    </div>
+                </section>
+
+                <section id="reportLoading" class="report-state-card report-loading-state d-none">
+                    <div class="xray-loading-orb mb-3">
+                        <i class="fas fa-file-waveform"></i>
+                    </div>
+                    <h4 class="fw-bold mb-2">Generating Report...</h4>
+                    <p class="text-light-secondary mb-0">
+                        We are compiling your date range into a consolidated patient-style medical summary.
+                    </p>
+                </section>
+
+                <section id="reportEmptyState" class="report-empty-card">
+                    <i class="fas fa-file-circle-question text-primary opacity-50 mb-3 d-block"></i>
+                    <h4 class="fw-bold mb-2">No report generated yet</h4>
+                    <p class="text-light-secondary mb-0">
+                        Choose a start and end date, then generate a consolidated report to review your medical activity summary.
+                    </p>
+                </section>
+
+                <section id="generatedReport" class="report-generated-shell d-none">
+                    <div class="report-meta-grid">
+                        <div class="report-meta-card">
+                            <p class="report-meta-label">Report ID</p>
+                            <p class="report-meta-value" id="reportId">-</p>
+                        </div>
+                        <div class="report-meta-card">
+                            <p class="report-meta-label">Generated</p>
+                            <p class="report-meta-value" id="reportGeneratedAt">-</p>
+                        </div>
+                        <div class="report-meta-card">
+                            <p class="report-meta-label">Date Range</p>
+                            <p class="report-meta-value" id="reportDateRange">-</p>
+                        </div>
+                        <div class="report-meta-card">
+                            <p class="report-meta-label">Patient</p>
+                            <p class="report-meta-value" id="reportPatient">-</p>
+                        </div>
+                    </div>
+
+                    <div class="report-summary-card">
+                        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                            <div>
+                                <p class="report-section-title mb-1">
+                                    <i class="fas fa-chart-line"></i>Executive Summary
+                                </p>
+                                <p class="report-item-muted mb-0">A concise overview of the selected date range.</p>
+                            </div>
+                            <span class="report-chip">
+                                <i class="fas fa-shield-heart me-2"></i>AI-generated
+                            </span>
+                        </div>
+                        <p id="executiveSummary" class="report-summary-text mb-3"></p>
+                        <div>
+                            <p class="report-item-muted mb-2">Key Concerns</p>
+                            <div id="keyConcernChips" class="report-chip-row"></div>
+                        </div>
+                    </div>
+
+                    <div class="report-stat-grid">
+                        <div class="report-stat-card">
+                            <p class="report-stat-label">Total Predictions</p>
+                            <p class="report-stat-value" id="totalPredictions">0</p>
+                        </div>
+                        <div class="report-stat-card">
+                            <p class="report-stat-label">Total X-Rays</p>
+                            <p class="report-stat-value" id="totalXrays">0</p>
+                        </div>
+                        <div class="report-stat-card">
+                            <p class="report-stat-label">Total Chats</p>
+                            <p class="report-stat-value" id="totalChats">0</p>
+                        </div>
+                        <div class="report-stat-card">
+                            <p class="report-stat-label">Most Common Concern</p>
+                            <p class="report-stat-value" id="mostCommonConcern">-</p>
+                        </div>
+                    </div>
+
+                    <div class="report-section-card">
+                        <p class="report-section-title">
+                            <i class="fas fa-brain me-2"></i>Disease Prediction Section
+                        </p>
+                        <div id="diseasePredictionsList" class="report-list"></div>
+                    </div>
+
+                    <div class="report-section-card">
+                        <p class="report-section-title">
+                            <i class="fas fa-x-ray me-2"></i>X-Ray Analysis Section
+                        </p>
+                        <div id="xrayAnalysesList" class="report-list"></div>
+                    </div>
+
+                    <div class="report-section-card">
+                        <p class="report-section-title">
+                            <i class="fas fa-comments me-2"></i>Chat History Section
+                        </p>
+                        <div id="chatHistoryList" class="report-list"></div>
+                    </div>
+
+                    <div class="report-section-card">
+                        <p class="report-section-title">
+                            <i class="fas fa-stethoscope me-2"></i>Recommendations
+                        </p>
+                        <div id="recommendationsList" class="report-list"></div>
+                    </div>
+                </section>
             </main>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/app.js"></script>
-    <script>
-        document.getElementById('sidebarToggle')?.addEventListener('click', function () {
-            document.getElementById('sidebar').classList.toggle('show');
-        });
-
-        function escapeHtml(value) {
-            return String(value || '').replace(/[&<>"']/g, char => ({
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            }[char]));
-        }
-
-        async function loadReports(date) {
-            const reportsList = document.getElementById('reportsList');
-            reportsList.innerHTML = '<p class="text-light-secondary mb-0">Loading reports...</p>';
-            const query = date ? `?date=${encodeURIComponent(date)}` : '';
-
-            try {
-                const response = await fetch(`/activity/history${query}`);
-                if (response.status === 401) {
-                    window.location.href = '/login';
-                    return;
-                }
-                const data = await response.json();
-
-                if (!data.items?.length) {
-                    reportsList.innerHTML = `
-                        <div class="dashboard-card">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div class="bg-primary bg-opacity-25 p-3 rounded">
-                                            <i class="fas fa-file-pdf text-primary fa-2x"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-1">No reports available</h6>
-                                            <p class="text-light-secondary small mb-0">${date ? 'No activity history found for the selected date.' : 'Reports will appear here after report generation is connected to the database.'}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    return;
-                }
-
-                reportsList.innerHTML = `
-                    <div class="timeline-item">
-                        <div class="timeline-date text-primary fw-bold mb-3">${date ? 'Reports for ' + escapeHtml(date) : 'Recent Reports'}</div>
-                        ${data.items.map(item => `
-                            <div class="timeline-entry mb-3">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <p class="fw-bold mb-1">${escapeHtml(item.title)}</p>
-                                    <p class="text-light-secondary small mb-2">${escapeHtml(item.description)}</p>
-                                    <small class="text-light-secondary">${escapeHtml(item.display_time)}</small>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } catch (error) {
-                console.error('[reports] Failed to load report history:', error);
-                reportsList.innerHTML = '<p class="text-light-secondary mb-0">Could not load reports.</p>';
-            }
-        }
-
-        document.getElementById('reportDate')?.addEventListener('change', function (event) {
-            loadReports(event.target.value);
-        });
-
-        loadReports();
-    </script>
+    <script src="js/reports.js"></script>
 </body>
-
 </html>

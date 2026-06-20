@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from backend.app.db import db_session
+from ..db import db_session
 
 
 def format_activity_time(value: str) -> str:

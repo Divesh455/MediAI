@@ -56,11 +56,17 @@ def get_env_int(name: str, default: int) -> int:
 
 APP_TITLE = os.getenv("APP_TITLE", "MediVision AI API")
 FRONTEND_DIR = get_env_path("FRONTEND_DIR", BACKEND_DIR / "static")
+UPLOADS_DIR = get_env_path("UPLOADS_DIR", FRONTEND_DIR / "uploads")
+PROFILE_IMAGES_DIR = get_env_path("PROFILE_IMAGES_DIR", UPLOADS_DIR / "profile-images")
 
 MODEL_DIR = get_env_path("MODEL_DIR", BASE_DIR / "Model")
 DATABASE_PATH = get_env_path("DATABASE_PATH", BACKEND_DIR / "mediai.db")
 SESSION_COOKIE_NAME = os.getenv("SESSION_COOKIE_NAME", "mediai_session")
 SESSION_MAX_AGE_SECONDS = get_env_int("SESSION_MAX_AGE_SECONDS", 60 * 60 * 24 * 7)
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", os.getenv("AUTH_TOKEN_SECRET", "mediAI-dev-jwt-secret"))
+JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
+JWT_EXPIRY_SECONDS = get_env_int("JWT_EXPIRY_SECONDS", SESSION_MAX_AGE_SECONDS)
+PROFILE_IMAGE_MAX_FILE_SIZE_BYTES = get_env_int("PROFILE_IMAGE_MAX_FILE_SIZE_BYTES", 5 * 1024 * 1024)
 
 MODEL_PATH = get_env_path("DISEASE_MODEL_PATH", MODEL_DIR / "disease_prediction_pipeline.pkl")
 ENCODER_PATH = get_env_path("LABEL_ENCODER_PATH", MODEL_DIR / "label_encoder.pkl")
@@ -71,6 +77,11 @@ TRAINING_PATH = get_env_path("TRAINING_DATA_PATH", MODEL_DIR / "Training.csv")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
 GEMINI_TEMPERATURE = get_env_float("GEMINI_TEMPERATURE", 0.3)
 GEMINI_MAX_OUTPUT_TOKENS = get_env_int("GEMINI_MAX_OUTPUT_TOKENS", 1024)
+X_RAY_GEMINI_MODEL = os.getenv("X_RAY_GEMINI_MODEL", "gemini-2.5-flash")
+X_RAY_GEMINI_TEMPERATURE = get_env_float("X_RAY_GEMINI_TEMPERATURE", 0.2)
+X_RAY_GEMINI_MAX_OUTPUT_TOKENS = get_env_int("X_RAY_GEMINI_MAX_OUTPUT_TOKENS", 2048)
+X_RAY_MAX_FILE_SIZE_BYTES = get_env_int("X_RAY_MAX_FILE_SIZE_BYTES", 10 * 1024 * 1024)
+X_RAY_REQUEST_TIMEOUT_SECONDS = get_env_int("X_RAY_REQUEST_TIMEOUT_SECONDS", 45)
 
 
 def get_gemini_api_key() -> str | None:

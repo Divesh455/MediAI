@@ -45,7 +45,6 @@
                         <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
                         <label class="form-check-label" for="rememberMe">Remember me</label>
                     </div>
-                    <a href="#" class="text-decoration-none text-primary">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Login</button>
@@ -55,14 +54,6 @@
                 <p class="text-light-secondary mb-0">Don't have an account? 
                     <a href="/register" class="text-decoration-none text-primary fw-bold">Sign up here</a>
                 </p>
-            </div>
-
-            <hr class="my-4 border-secondary">
-
-            <div class="d-grid gap-2">
-                <button type="button" class="btn btn-outline-primary">
-                    <i class="fab fa-google me-2"></i>Login with Google
-                </button>
             </div>
         </div>
     </div>
@@ -104,6 +95,8 @@
                 if (!response.ok) {
                     throw new Error(result.detail || 'Login failed.');
                 }
+                localStorage.setItem('token', result.token || '');
+                localStorage.setItem('user_id', String(result.user?.id || ''));
                 window.location.href = '/dashboard';
             } catch (error) {
                 alert(error.message || 'Login failed.');

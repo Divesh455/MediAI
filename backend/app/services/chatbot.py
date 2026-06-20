@@ -7,13 +7,13 @@ from urllib.request import Request, urlopen
 
 from fastapi import HTTPException
 
-from backend.app.core.config import (
+from ..core.config import (
     GEMINI_MAX_OUTPUT_TOKENS,
     GEMINI_MODEL,
     GEMINI_TEMPERATURE,
     get_gemini_api_key,
 )
-from backend.app.schemas.chat import ChatRequest, ChatResponse
+from ..schemas.chat import ChatRequest, ChatResponse
 
 
 SYSTEM_PROMPT = (

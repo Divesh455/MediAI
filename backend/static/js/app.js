@@ -87,20 +87,39 @@ class MediAIApi {
 
     async request(endpoint, options = {}) {
         const url = `${this.baseUrl}${endpoint}`;
+        const headers = { ...(options.headers || {}) };
+        const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData;
+        const authToken = localStorage.getItem('token');
+
+        if (!isFormData && !headers['Content-Type']) {
+            headers['Content-Type'] = 'application/json';
+        }
+        if (authToken && !headers.Authorization) {
+            headers.Authorization = `Bearer ${authToken}`;
+        }
+
         const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                ...options.headers
-            },
+            credentials: 'same-origin',
+            headers,
             ...options
         };
 
         try {
             const response = await fetch(url, config);
+            const contentType = response.headers.get('content-type') || '';
+            const responseBody = contentType.includes('application/json')
+                ? await response.json()
+                : await response.text();
+
             if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
+                const errorMessage = typeof responseBody === 'string'
+                    ? responseBody
+                    : responseBody?.detail || `API Error: ${response.status}`;
+                const error = new Error(errorMessage);
+                error.status = response.status;
+                throw error;
             }
-            return await response.json();
+            return responseBody;
         } catch (error) {
             console.error('[v0] API Error:', error);
             throw error;
@@ -115,10 +134,9 @@ class MediAIApi {
     }
 
     async analyzeXRay(formData) {
-        return this.request('/analyze-xray', {
+        return this.request('/api/xray/analyze', {
             method: 'POST',
-            body: formData,
-            headers: {} // Let browser set content-type for FormData
+            body: formData
         });
     }
 
@@ -140,6 +158,8 @@ async function logout() {
     } catch (error) {
         console.error('[auth] Logout failed:', error);
     } finally {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_id');
         window.location.href = '/login';
     }
 }

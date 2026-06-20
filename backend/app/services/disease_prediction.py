@@ -6,7 +6,7 @@ import joblib
 import pandas as pd
 from fastapi import HTTPException
 
-from backend.app.core.config import (
+from ..core.config import (
     DESCRIPTION_PATH,
     ENCODER_PATH,
     MODEL_PATH,

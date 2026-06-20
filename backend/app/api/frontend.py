@@ -6,8 +6,8 @@ from fastapi import APIRouter, HTTPException
 from fastapi import Request
 from fastapi.responses import FileResponse, RedirectResponse
 
-from backend.app.core.config import FRONTEND_DIR
-from backend.app.services.auth import get_current_user_optional
+from ..core.config import FRONTEND_DIR
+from ..services.auth import get_current_user_optional
 
 
 router = APIRouter()
@@ -25,7 +25,7 @@ PAGE_FILES = {
     "register": "register.html",
 }
 
-PUBLIC_PAGES = {"login", "register"}
+PUBLIC_PAGES = {"login", "register", "profile"}
 
 ASSET_EXTENSIONS = {
     ".ico",
