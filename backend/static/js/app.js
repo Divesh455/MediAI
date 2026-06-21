@@ -58,7 +58,8 @@ if (typeof AOS !== 'undefined') {
 
 // ===== Sidebar Toggle for Mobile =====
 const sidebarToggle = document.getElementById('sidebarToggle');
-if (sidebarToggle) {
+if (sidebarToggle && sidebarToggle.dataset.sidebarBound !== 'true') {
+    sidebarToggle.dataset.sidebarBound = 'true';
     sidebarToggle.addEventListener('click', function() {
         const sidebar = document.getElementById('sidebar');
         if (sidebar) {

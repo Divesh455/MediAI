@@ -34,10 +34,6 @@
             return;
         }
 
-        document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-            document.getElementById('sidebar')?.classList.toggle('show');
-        });
-
         elements.generateReportBtn.addEventListener('click', handleGenerateReport);
         elements.downloadPdfBtn.addEventListener('click', () => downloadReportFile('pdf'));
         elements.downloadDocxBtn.addEventListener('click', () => downloadReportFile('docx'));
