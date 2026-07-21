@@ -752,6 +752,14 @@ def generate_report_payload(user: dict, start_date: date, end_date: date) -> dic
         recommendations = _recommended_next_actions(concerns, statistics)
 
         report_id = _generate_report_id(connection, generated_at)
+        log_user_activity(
+            connection,
+            user["id"],
+            "report",
+            "Report Generated",
+            f"Consolidated medical report for {start_date} to {end_date}",
+            created_at=generated_at,
+        )
         payload = {
             "report_id": report_id,
             "generated_at": generated_at,

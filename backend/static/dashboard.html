@@ -193,7 +193,7 @@
                     <div class="timeline-content">
                         <p class="fw-bold mb-1">${escapeHtml(item.title)}</p>
                         <p class="text-light-secondary small mb-1">${escapeHtml(item.description)}</p>
-                        <small class="text-light-secondary">${escapeHtml(item.display_time)}</small>
+                        <small class="text-light-secondary">${escapeHtml(formatDateTime(item.created_at || item.display_time))}</small>
                     </div>
                 </div>
             `).join('');

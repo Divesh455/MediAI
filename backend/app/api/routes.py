@@ -93,6 +93,15 @@ def register(payload: RegisterRequest, response: Response) -> AuthResponse:
 def login(payload: LoginRequest, response: Response) -> AuthResponse:
     user = authenticate_user(payload.email, payload.password)
     create_session(response, user["id"])
+    with db_session() as connection:
+        log_user_activity(
+            connection,
+            user["id"],
+            "auth",
+            "User Logged In",
+            "Successfully signed into MediAI",
+            created_at=utc_now(),
+        )
     return AuthResponse(token=create_auth_token(user["id"]), user=public_user(user))
 
 
@@ -386,6 +395,15 @@ def change_password(
         raise HTTPException(status_code=400, detail="Invalid current password.")
 
     change_user_password(user["id"], payload.new_password)
+    with db_session() as connection:
+        log_user_activity(
+            connection,
+            user["id"],
+            "auth",
+            "Password Changed",
+            "Updated security settings",
+            created_at=utc_now(),
+        )
     return {"message": "Password changed successfully."}
 
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from ..db import db_session
+from .reports import sync_reporting_tables
 
 
 def format_activity_time(value: str) -> str:
@@ -15,6 +16,7 @@ def format_activity_time(value: str) -> str:
 
 def get_dashboard_stats(user: dict) -> dict:
     with db_session() as connection:
+        sync_reporting_tables(connection, user["id"])
         total_conversations = connection.execute(
             "SELECT COUNT(*) AS count FROM conversations WHERE user_id = ?",
             (user["id"],),
@@ -89,6 +91,7 @@ def get_user_history(user: dict, date: str | None = None) -> dict:
     query += " ORDER BY created_at DESC LIMIT 50"
 
     with db_session() as connection:
+        sync_reporting_tables(connection, user["id"])
         rows = connection.execute(query, params).fetchall()
 
     return {

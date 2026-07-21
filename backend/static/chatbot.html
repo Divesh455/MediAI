@@ -297,15 +297,16 @@
         }
 
         // Add message to chat
-        function addMessage(text, isBot = false) {
+        function addMessage(text, isBot = false, timestamp = null) {
             const chatMessages = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'mb-3';
+            const timeStr = timestamp ? formatDateTime(timestamp) : formatDateTime(new Date().toISOString());
 
             if (isBot) {
                 const botContent = text === 'Thinking...'
                     ? `<div class="glass-effect p-3 flex-grow-1"><p class="mb-0"><i class="fas fa-spinner fa-spin me-2"></i>${formatMessage(text)}</p></div>`
-                    : `<div class="flex-grow-1">${buildStructuredResponse(text)}</div>`;
+                    : `<div class="flex-grow-1">${buildStructuredResponse(text)}<small class="text-light-secondary d-block mt-1" style="font-size: 0.75rem;">${timeStr}</small></div>`;
 
                 messageDiv.innerHTML = `
                     <div class="d-flex gap-2">
@@ -318,6 +319,7 @@
                     <div class="d-flex gap-2 justify-content-end">
                         <div class="glass-effect p-3" style="max-width: 70%;">
                             <p class="mb-0">${formatMessage(text)}</p>
+                            <small class="text-light-secondary d-block text-end mt-1" style="font-size: 0.75rem;">${timeStr}</small>
                         </div>
                         <i class="fas fa-user text-primary fa-2x flex-shrink-0"></i>
                     </div>
@@ -352,7 +354,7 @@
 
                 document.getElementById('chatMessages').innerHTML = '';
                 data.messages.forEach(message => {
-                    addMessage(message.content, message.role === 'assistant');
+                    addMessage(message.content, message.role === 'assistant', message.created_at);
                     rememberMessage(message.role, message.content);
                 });
             } catch (error) {

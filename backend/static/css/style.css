@@ -2024,3 +2024,298 @@ body.light-mode .symptom-suggestion.active {
     background: rgba(0, 168, 82, 0.1) !important;
     color: var(--primary) !important;
 }
+
+/* ===== Advanced Animations & Futuristic UI Enhancements ===== */
+
+/* Matrix Holographic Scanline Effect */
+body::after {
+    content: '';
+    position: fixed;
+    top: -100%;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 255, 102, 0.03) 50%,
+        rgba(0, 255, 102, 0.08) 51%,
+        transparent 100%
+    );
+    z-index: -1;
+    pointer-events: none;
+    animation: matrixScanline 8s linear infinite;
+}
+
+@keyframes matrixScanline {
+    0% { transform: translateY(0%); }
+    100% { transform: translateY(200%); }
+}
+
+/* Living Neon Gradient Shimmer */
+.text-gradient {
+    background: linear-gradient(90deg, #00ff66 0%, #00ffaa 25%, #059669 50%, #00ffaa 75%, #00ff66 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShimmer 4s ease infinite;
+}
+
+@keyframes gradientShimmer {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+}
+
+/* Pulsing Cyber Glow for Icons & Badges */
+.navbar-brand i, .cyber-pulse {
+    animation: neonPulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+    0% {
+        filter: drop-shadow(0 0 2px rgba(0, 255, 102, 0.4));
+    }
+    100% {
+        filter: drop-shadow(0 0 10px rgba(0, 255, 102, 0.9));
+    }
+}
+
+/* Card Hover Lift & Border Glow Animations */
+.chart-container, .card, .glass-effect, .stat-card, .feature-card {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.chart-container:hover, .card:hover, .glass-effect:hover, .stat-card:hover, .feature-card:hover {
+    transform: translateY(-4px) scale(1.008);
+    border-color: rgba(0, 255, 102, 0.45) !important;
+    box-shadow: 0 12px 32px rgba(0, 255, 102, 0.18), 0 0 15px rgba(0, 255, 102, 0.1) !important;
+}
+
+/* Shimmer Button Sweep & Micro-Interactions */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.3s ease;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    transition: all 0.6s ease;
+}
+
+.btn-primary:hover::after {
+    left: 130%;
+}
+
+.btn-primary:active, .btn-secondary:active, .btn-outline-primary:active {
+    transform: scale(0.96) !important;
+}
+
+/* Form Field Neon Focus Ring */
+.form-control, .form-select {
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.35), inset 0 0 5px rgba(0, 255, 102, 0.1) !important;
+    background-color: rgba(6, 26, 18, 0.9) !important;
+}
+
+body.light-mode .form-control:focus, body.light-mode .form-select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 12px rgba(0, 168, 82, 0.3) !important;
+    background-color: #ffffff !important;
+}
+
+/* Custom Cyber Matrix Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 102, 0.3);
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+}
+
+/* Custom Text Highlight */
+::selection {
+    background: var(--primary);
+    color: var(--bg-darker);
+}
+
+/* Badge Pulse Animation */
+.badge.bg-success, .badge.bg-primary, .severity-badge {
+    position: relative;
+    overflow: hidden;
+}
+
+.badge.bg-success::after, .badge.bg-primary::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 8px var(--primary);
+    opacity: 0.6;
+    animation: badgePing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes badgePing {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* Smooth Navigation Active Pillar Indicator */
+.sidebar .nav-link {
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sidebar .nav-link:hover {
+    transform: translateX(4px);
+}
+
+.sidebar .nav-link.active {
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+}
+
+/* ===== Page Entrance & Staggered Motion Animations ===== */
+
+/* Animated Moving Background Grid */
+body::before {
+    animation: gridDrift 60s linear infinite;
+}
+
+@keyframes gridDrift {
+    0% { background-position: 50% 50%, 0 0, 0 0; }
+    50% { background-position: 50% 50%, 28px 28px, -28px -28px; }
+    100% { background-position: 50% 50%, 0 0, 0 0; }
+}
+
+/* Page & Section Fade-Up Entrance */
+main, .chart-container, .card, .stat-card, .feature-card, .sidebar, .glass-effect {
+    animation: matrixFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes matrixFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(22px) scale(0.985);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Staggered Children Entrance Cascades */
+.row > div:nth-child(1) .chart-container,
+.row > div:nth-child(1) .card,
+.row > div:nth-child(1) .stat-card { animation-delay: 0.05s; }
+
+.row > div:nth-child(2) .chart-container,
+.row > div:nth-child(2) .card,
+.row > div:nth-child(2) .stat-card { animation-delay: 0.12s; }
+
+.row > div:nth-child(3) .chart-container,
+.row > div:nth-child(3) .card,
+.row > div:nth-child(3) .stat-card { animation-delay: 0.19s; }
+
+.row > div:nth-child(4) .chart-container,
+.row > div:nth-child(4) .card,
+.row > div:nth-child(4) .stat-card { animation-delay: 0.26s; }
+
+/* Floating Micro-Animation for Avatars & Icons */
+.stat-icon, .avatar-wrapper, .hero-image-wrapper, .floating-icon {
+    animation: floatVertical 4s ease-in-out infinite;
+}
+
+@keyframes floatVertical {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-7px); }
+}
+
+/* Smooth Chat Bubble Slide-In */
+.chat-message, .message-bubble, .symptom-tag {
+    animation: chatMessageSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes chatMessageSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* High-Tech Rotating Spinners */
+.fa-spin, .loading-spinner, .cyber-spin {
+    animation: cyberSpin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite !important;
+}
+
+@keyframes cyberSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Pulsing Border Accent Highlights */
+.border-pulse {
+    animation: borderGlowPulse 3s infinite alternate;
+}
+
+@keyframes borderGlowPulse {
+    0% { border-color: rgba(0, 255, 102, 0.2); box-shadow: 0 0 5px rgba(0, 255, 102, 0.05); }
+    100% { border-color: rgba(0, 255, 102, 0.6); box-shadow: 0 0 18px rgba(0, 255, 102, 0.25); }
+}
+
+/* ===== Seamless Page Navigation Transitions ===== */
+body {
+    animation: pageTransitionIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pageTransitionIn {
+    0% {
+        opacity: 0;
+        transform: translateY(12px);
+        filter: blur(4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+body.page-transition-exit {
+    opacity: 0 !important;
+    transform: translateY(-10px) !important;
+    filter: blur(3px) !important;
+    transition: opacity 0.22s ease, transform 0.22s ease, filter 0.22s ease !important;
+}

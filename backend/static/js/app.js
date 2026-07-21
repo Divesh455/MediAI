@@ -153,6 +153,24 @@ class MediAIApi {
 window.mediaiApi = new MediAIApi();
 
 // ===== Auth Helpers =====
+function getAuthHeaders(extraHeaders = {}) {
+    const headers = { ...extraHeaders };
+    const token = localStorage.getItem('token');
+    if (token && !headers['Authorization']) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
+}
+
+async function authFetch(url, options = {}) {
+    const headers = getAuthHeaders(options.headers || {});
+    return fetch(url, {
+        credentials: 'same-origin',
+        ...options,
+        headers
+    });
+}
+
 async function logout() {
     try {
         await fetch('/auth/logout', { method: 'POST' });
@@ -165,12 +183,33 @@ async function logout() {
     }
 }
 
-document.querySelectorAll('a').forEach(link => {
+// ===== Smooth Page Navigation Transitions =====
+document.addEventListener('click', (event) => {
+    const link = event.target.closest('a');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    
+    // Check if logout link
     if (link.textContent.trim().toLowerCase() === 'logout') {
-        link.addEventListener('click', event => {
+        event.preventDefault();
+        logout();
+        return;
+    }
+
+    // Check if internal page link
+    if (href && !href.startsWith('#') && !href.startsWith('javascript:') && !href.startsWith('mailto:') && !href.startsWith('tel:') && link.target !== '_blank') {
+        const targetUrl = link.href;
+        const currentUrl = window.location.href.split('#')[0];
+        
+        // If navigating to a different page URL on the same origin
+        if (targetUrl && link.origin === window.location.origin && targetUrl.split('#')[0] !== currentUrl) {
             event.preventDefault();
-            logout();
-        });
+            document.body.classList.add('page-transition-exit');
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 200);
+        }
     }
 });
 
@@ -216,12 +255,34 @@ function setLoading(element, isLoading) {
     }
 }
 
-// ===== Format Date Helper =====
+// ===== Format Date & Time Helpers =====
 function formatDate(date) {
-    return new Date(date).toLocaleDateString('en-US', {
+    if (!date) return '';
+    const d = new Date(date);
+    if (isNaN(d.getTime())) return String(date);
+    return d.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
+    });
+}
+
+function formatDateTime(dateStr) {
+    if (!dateStr) return '';
+    let iso = String(dateStr).trim();
+    if (iso.includes('T') && !iso.endsWith('Z') && !iso.includes('+') && !iso.includes('-')) {
+        iso += 'Z';
+    }
+    const date = new Date(iso);
+    if (isNaN(date.getTime())) return String(dateStr);
+
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
     });
 }
 

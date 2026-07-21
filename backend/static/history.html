@@ -95,13 +95,14 @@
         async function loadHistory() {
             const timeline = document.getElementById('historyTimeline');
             try {
-                const response = await fetch('/activity/history');
+                const response = await authFetch('/activity/history');
                 if (response.status === 401) {
                     window.location.href = '/login';
                     return;
                 }
                 const data = await response.json();
-                if (!data.items.length) {
+                const items = Array.isArray(data.items) ? data.items : [];
+                if (!items.length) {
                     timeline.innerHTML = '<p class="text-light-secondary mb-0">No activity yet. Use the chatbot or disease prediction to create history.</p>';
                     return;
                 }
@@ -109,13 +110,13 @@
                 timeline.innerHTML = `
                     <div class="timeline-item">
                         <div class="timeline-date text-primary fw-bold mb-3">Recent Activity</div>
-                        ${data.items.map(item => `
+                        ${items.map(item => `
                             <div class="timeline-entry mb-3">
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-content">
                                     <p class="fw-bold mb-1">${escapeHtml(item.title)}</p>
                                     <p class="text-light-secondary small mb-2">${escapeHtml(item.description)}</p>
-                                    <small class="text-light-secondary">${escapeHtml(item.display_time)}</small>
+                                    <small class="text-light-secondary">${escapeHtml(formatDateTime(item.created_at || item.display_time))}</small>
                                 </div>
                             </div>
                         `).join('')}
