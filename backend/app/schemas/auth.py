@@ -75,3 +75,19 @@ class ProfilePhotoUploadResponse(BaseModel):
 class AuthResponse(BaseModel):
     token: str | None = None
     user: UserResponse
+
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str = Field(..., alias="currentPassword")
+    new_password: str = Field(..., min_length=8, max_length=128, alias="newPassword")
+
+    @validator("new_password")
+    @classmethod
+    def validate_password(cls, password: str) -> str:
+        if not any(char.isupper() for char in password):
+            raise ValueError("Password must include an uppercase letter.")
+        if not any(char.islower() for char in password):
+            raise ValueError("Password must include a lowercase letter.")
+        if not any(char.isdigit() for char in password):
+            raise ValueError("Password must include a number.")
+        return password

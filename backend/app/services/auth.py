@@ -376,3 +376,20 @@ def require_current_user(request: Request) -> dict:
 
 
 CurrentUser = Depends(require_current_user)
+
+
+def change_user_password(user_id: int, new_password: str) -> None:
+    hashed = hash_password(new_password)
+    with db_session() as connection:
+        connection.execute(
+            "UPDATE users SET password_hash = ? WHERE id = ?",
+            (hashed, user_id),
+        )
+
+
+def delete_user_account(user_id: int) -> None:
+    with db_session() as connection:
+        connection.execute(
+            "DELETE FROM users WHERE id = ?",
+            (user_id,),
+        )

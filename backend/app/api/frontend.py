@@ -41,7 +41,14 @@ def html_response(filename: str) -> FileResponse:
     path = FRONTEND_DIR / filename
     if not path.exists():
         raise HTTPException(status_code=404, detail=f"Page not found: {filename}")
-    return FileResponse(path)
+    return FileResponse(
+        path,
+        headers={
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            "Pragma": "no-cache",
+            "Expires": "0"
+        }
+    )
 
 
 @router.get("/", include_in_schema=False)
@@ -62,8 +69,12 @@ def page(page_name: str, request: Request):
         return html_response(PAGE_FILES[page_name])
 
     asset_path = FRONTEND_DIR / page_name
-    if asset_path.suffix.lower() in ASSET_EXTENSIONS and asset_path.exists():
-        return FileResponse(asset_path)
+    if asset_path.suffix.lower() in ASSET_EXTENSIONS:
+        if asset_path.exists():
+            return FileResponse(asset_path)
+        img_path = FRONTEND_DIR / "img" / page_name
+        if img_path.exists():
+            return FileResponse(img_path)
 
     raise HTTPException(status_code=404, detail="Page not found")
 

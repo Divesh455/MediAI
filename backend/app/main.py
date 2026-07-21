@@ -27,6 +27,7 @@ def create_app() -> FastAPI:
     app.include_router(router)
     app.mount("/css", StaticFiles(directory=FRONTEND_DIR / "css"), name="css")
     app.mount("/js", StaticFiles(directory=FRONTEND_DIR / "js"), name="js")
+    app.mount("/img", StaticFiles(directory=FRONTEND_DIR / "img"), name="img")
     app.mount("/uploads", StaticFiles(directory=UPLOADS_DIR), name="uploads")
     app.include_router(frontend_router)
     return app

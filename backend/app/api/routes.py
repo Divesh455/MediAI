@@ -15,6 +15,7 @@ from ..schemas.auth import (
     ProfileUpdateRequest,
     RegisterRequest,
     UserResponse,
+    ChangePasswordRequest,
 )
 from ..schemas.chat import ChatRequest, ChatResponse
 from ..schemas.disease import DiseasePredictionRequest, DiseasePredictionResponse
@@ -32,6 +33,10 @@ from ..services.auth import (
     split_profile_name,
     store_profile_image,
     update_user_profile,
+    change_user_password,
+    delete_user_account,
+    verify_password,
+    get_user_by_id,
 )
 from ..services.chatbot import get_chat_response
 from ..services.dashboard import get_dashboard_stats, get_user_history
@@ -369,3 +374,27 @@ def download_report_docx(report_id: str, user: dict = Depends(require_current_us
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         headers={"Content-Disposition": f'attachment; filename="{report_id}.docx"'},
     )
+
+
+@router.post("/auth/change-password")
+def change_password(
+    payload: ChangePasswordRequest,
+    user: dict = Depends(require_current_user),
+) -> dict:
+    db_user = get_user_by_id(user["id"])
+    if not db_user or not verify_password(payload.current_password, db_user["password_hash"]):
+        raise HTTPException(status_code=400, detail="Invalid current password.")
+
+    change_user_password(user["id"], payload.new_password)
+    return {"message": "Password changed successfully."}
+
+
+@router.delete("/auth/delete-account")
+def delete_account(
+    request: Request,
+    response: Response,
+    user: dict = Depends(require_current_user),
+) -> dict:
+    delete_user_account(user["id"])
+    delete_session(response, request.cookies.get(SESSION_COOKIE_NAME))
+    return {"message": "Account deleted successfully."}
