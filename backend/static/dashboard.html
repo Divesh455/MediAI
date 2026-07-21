@@ -223,7 +223,7 @@
                     </div>
                     <div class="summary-row">
                         <span>Member Since</span>
-                        <strong>${escapeHtml(user.member_since || 'Unknown')}</strong>
+                        <strong>${escapeHtml(formatDateTime(user.created_at || user.member_since) || 'Unknown')}</strong>
                     </div>
                     <div class="summary-row">
                         <span>Your Conversations</span>
