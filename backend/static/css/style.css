@@ -1,19 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 /* ===== CSS Variables & Design System ===== */
 :root {
-    --primary: #00d4ff;
-    --primary-dark: #0099cc;
-    --secondary: #1e90ff;
-    --accent: #ff006e;
-    --bg-dark: #0a0e27;
-    --bg-darker: #050a1a;
-    --bg-card: rgba(15, 23, 42, 0.8);
-    --text-primary: #ffffff;
-    --text-secondary: #b0b9c6;
-    --border-color: rgba(0, 212, 255, 0.1);
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 32px rgba(0, 212, 255, 0.1);
-    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
-    --transition: all 0.3s ease;
+    --primary: #00ff66; /* Matrix Emerald Green */
+    --primary-dark: #00cc52;
+    --secondary: #059669; /* Deep forest emerald */
+    --accent: #00ffaa; /* Accent mint green */
+    --bg-dark: #040d08; /* Deep moss/forest black */
+    --bg-darker: #010503; /* Near pitch black with hint of forest */
+    --bg-card: rgba(6, 20, 14, 0.78); /* Semi-transparent dark moss card */
+    --text-primary: #e6f9ed; /* Pale mint white */
+    --text-secondary: #8fa89b; /* Mossy sage grey/green */
+    --border-color: rgba(0, 255, 102, 0.15);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 8px 32px rgba(0, 255, 102, 0.12);
+    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.7);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ===== Base Styles ===== */
@@ -28,11 +30,36 @@ html {
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background: var(--bg-dark);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(1, 5, 3, 0.9) 100%),
+                linear-gradient(rgba(0, 255, 102, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 102, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 28px 28px, 28px 28px;
+    z-index: -2;
+    pointer-events: none;
+}
+
+h1, h2, h3, h4, h5, h6, 
+.navbar-brand, .btn, .nav-link, .stat-value, 
+.report-stat-value, .report-meta-value, .report-section-title, 
+.symptom-suggestion, .chat-response-section h6, .severity-badge,
+.typing-text {
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 0.02em;
 }
 
 .bg-dark {
@@ -54,12 +81,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(30, 144, 255, 0.05) 50%, transparent 100%);
+    background: linear-gradient(135deg, rgba(0, 255, 102, 0.1) 0%, rgba(5, 150, 105, 0.05) 50%, transparent 100%);
     pointer-events: none;
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, #00d4ff 0%, #1e90ff 50%, #00d4ff 100%);
+    background: linear-gradient(135deg, #00ff66 0%, #059669 50%, #00ff66 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -75,7 +102,7 @@ body {
 
 .glass-effect:hover {
     background: rgba(15, 23, 42, 0.8);
-    border-color: rgba(0, 212, 255, 0.3);
+    border-color: rgba(0, 255, 102, 0.3);
     box-shadow: var(--shadow-md);
 }
 
@@ -148,13 +175,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(0, 255, 102, 0.1);
     border-radius: 12px;
     transition: var(--transition);
 }
 
 .benefit-item:hover .benefit-icon {
-    background: rgba(0, 212, 255, 0.2);
+    background: rgba(0, 255, 102, 0.2);
     transform: scale(1.1);
 }
 
@@ -169,14 +196,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(0, 255, 102, 0.1);
     border-radius: 50%;
     flex-shrink: 0;
     transition: var(--transition);
 }
 
 .service-list li:hover .service-icon {
-    background: rgba(0, 212, 255, 0.3);
+    background: rgba(0, 255, 102, 0.3);
     transform: scale(1.1);
 }
 
@@ -190,7 +217,7 @@ body {
 .btn-primary:hover {
     background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 255, 102, 0.3);
 }
 
 .btn-outline-primary {
@@ -203,6 +230,13 @@ body {
     background: var(--primary);
     border-color: var(--primary);
     color: var(--bg-dark);
+}
+
+.btn-check:checked + .btn-outline-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: var(--bg-dark) !important;
+    box-shadow: 0 0 12px rgba(0, 255, 102, 0.5) !important;
 }
 
 /* ===== Navbar ===== */
@@ -228,7 +262,7 @@ body {
 .form-control:focus, .form-select:focus {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--primary);
-    box-shadow: 0 0 0 0.25rem rgba(0, 212, 255, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(0, 255, 102, 0.25);
     color: var(--text-primary);
 }
 
@@ -342,7 +376,7 @@ body {
     width: 100%;
     max-width: 760px;
     background: rgba(15, 23, 42, 0.82);
-    border: 1px solid rgba(0, 212, 255, 0.18);
+    border: 1px solid rgba(0, 255, 102, 0.18);
     border-radius: 12px;
     box-shadow: 0 16px 42px rgba(0, 0, 0, 0.28);
     overflow: hidden;
@@ -373,7 +407,7 @@ body {
     margin-right: 0.55rem;
     border-radius: 50%;
     background: currentColor;
-    box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.1);
+    box-shadow: 0 0 0 4px rgba(0, 255, 102, 0.1);
     flex-shrink: 0;
 }
 
@@ -511,7 +545,7 @@ body {
 
 .nav-link:hover, .nav-link.active {
     color: var(--primary);
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(0, 255, 102, 0.1);
     border-left-color: var(--primary);
 }
 
@@ -562,8 +596,8 @@ body {
     height: 160px;
     padding: 6px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(30, 144, 255, 0.08));
-    box-shadow: 0 20px 50px rgba(0, 212, 255, 0.15);
+    background: linear-gradient(135deg, rgba(0, 255, 102, 0.3), rgba(5, 150, 105, 0.08));
+    box-shadow: 0 20px 50px rgba(0, 255, 102, 0.15);
 }
 
 .profile-avatar-image {
@@ -651,9 +685,9 @@ textarea.form-control:disabled {
 
 .report-builder {
     background:
-        radial-gradient(circle at top right, rgba(0, 212, 255, 0.12), transparent 38%),
+        radial-gradient(circle at top right, rgba(0, 255, 102, 0.12), transparent 38%),
         linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(5, 10, 26, 0.94) 100%);
-    border: 1px solid rgba(0, 212, 255, 0.16);
+    border: 1px solid rgba(0, 255, 102, 0.16);
     border-radius: 18px;
     padding: 1.25rem;
 }
@@ -695,11 +729,11 @@ textarea.form-control:disabled {
     text-align: center;
     min-height: 340px;
     padding: 2rem;
-    border: 1px dashed rgba(0, 212, 255, 0.18);
+    border: 1px dashed rgba(0, 255, 102, 0.18);
     border-radius: 18px;
     background:
-        radial-gradient(circle at top, rgba(0, 212, 255, 0.12), transparent 50%),
-        rgba(0, 212, 255, 0.04);
+        radial-gradient(circle at top, rgba(0, 255, 102, 0.12), transparent 50%),
+        rgba(0, 255, 102, 0.04);
 }
 
 .report-state-card i {
@@ -724,8 +758,8 @@ textarea.form-control:disabled {
 .report-meta-card {
     padding: 1rem;
     border-radius: 16px;
-    border: 1px solid rgba(0, 212, 255, 0.12);
-    background: rgba(0, 212, 255, 0.05);
+    border: 1px solid rgba(0, 255, 102, 0.12);
+    background: rgba(0, 255, 102, 0.05);
 }
 
 .report-meta-label {
@@ -748,14 +782,14 @@ textarea.form-control:disabled {
 .report-section-card {
     padding: 1.25rem;
     border-radius: 18px;
-    border: 1px solid rgba(0, 212, 255, 0.12);
-    background: rgba(0, 212, 255, 0.04);
+    border: 1px solid rgba(0, 255, 102, 0.12);
+    background: rgba(0, 255, 102, 0.04);
 }
 
 .report-summary-card {
     background:
-        radial-gradient(circle at top right, rgba(0, 212, 255, 0.12), transparent 35%),
-        rgba(0, 212, 255, 0.04);
+        radial-gradient(circle at top right, rgba(0, 255, 102, 0.12), transparent 35%),
+        rgba(0, 255, 102, 0.04);
 }
 
 .report-section-title {
@@ -785,8 +819,8 @@ textarea.form-control:disabled {
     align-items: center;
     padding: 0.4rem 0.7rem;
     border-radius: 999px;
-    background: rgba(0, 212, 255, 0.09);
-    border: 1px solid rgba(0, 212, 255, 0.14);
+    background: rgba(0, 255, 102, 0.09);
+    border: 1px solid rgba(0, 255, 102, 0.14);
     color: var(--text-primary);
     font-size: 0.84rem;
     white-space: nowrap;
@@ -801,8 +835,8 @@ textarea.form-control:disabled {
 .report-stat-card {
     padding: 1rem 1.1rem;
     border-radius: 16px;
-    border: 1px solid rgba(0, 212, 255, 0.12);
-    background: rgba(0, 212, 255, 0.04);
+    border: 1px solid rgba(0, 255, 102, 0.12);
+    background: rgba(0, 255, 102, 0.04);
 }
 
 .report-stat-label {
@@ -828,7 +862,7 @@ textarea.form-control:disabled {
 .report-item {
     padding: 1rem;
     border-radius: 14px;
-    border: 1px solid rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 255, 102, 0.1);
     background: rgba(5, 10, 26, 0.4);
 }
 
@@ -868,8 +902,8 @@ textarea.form-control:disabled {
     padding: 2rem;
     text-align: center;
     border-radius: 18px;
-    border: 1px dashed rgba(0, 212, 255, 0.18);
-    background: rgba(0, 212, 255, 0.04);
+    border: 1px dashed rgba(0, 255, 102, 0.18);
+    background: rgba(0, 255, 102, 0.04);
 }
 
 .report-empty-card i {
@@ -923,19 +957,19 @@ textarea.form-control:disabled {
 .upload-dropzone {
     min-height: 260px;
     padding: 1.75rem;
-    border: 1px dashed rgba(0, 212, 255, 0.28);
+    border: 1px dashed rgba(0, 255, 102, 0.28);
     border-radius: 18px;
     background:
-        radial-gradient(circle at top right, rgba(0, 212, 255, 0.12), transparent 45%),
-        linear-gradient(180deg, rgba(0, 212, 255, 0.06) 0%, rgba(5, 10, 26, 0.22) 100%);
+        radial-gradient(circle at top right, rgba(0, 255, 102, 0.12), transparent 45%),
+        linear-gradient(180deg, rgba(0, 255, 102, 0.06) 0%, rgba(5, 10, 26, 0.22) 100%);
     cursor: pointer;
     transition: var(--transition);
 }
 
 .upload-dropzone:hover,
 .upload-dropzone.dragover {
-    border-color: rgba(0, 212, 255, 0.7);
-    box-shadow: 0 18px 48px rgba(0, 212, 255, 0.14);
+    border-color: rgba(0, 255, 102, 0.7);
+    box-shadow: 0 18px 48px rgba(0, 255, 102, 0.14);
     transform: translateY(-2px);
 }
 
@@ -960,10 +994,10 @@ textarea.form-control:disabled {
     justify-content: center;
     margin-bottom: 1rem;
     border-radius: 24px;
-    background: rgba(0, 212, 255, 0.12);
+    background: rgba(0, 255, 102, 0.12);
     color: var(--primary);
     font-size: 2rem;
-    box-shadow: inset 0 0 0 1px rgba(0, 212, 255, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(0, 255, 102, 0.18);
 }
 
 .upload-preview-card {
@@ -972,9 +1006,9 @@ textarea.form-control:disabled {
     gap: 1.15rem;
     margin-top: 1.5rem;
     padding: 1rem;
-    border: 1px solid rgba(0, 212, 255, 0.18);
+    border: 1px solid rgba(0, 255, 102, 0.18);
     border-radius: 18px;
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(0, 255, 102, 0.05);
     overflow: hidden;
 }
 
@@ -982,7 +1016,7 @@ textarea.form-control:disabled {
     width: 100%;
     max-height: 700px;
     overflow: auto;
-    border: 1px solid #2b8cff;
+    border: 1px solid #00ff66;
     border-radius: 12px;
     padding: 12px;
     display: flex;
@@ -1010,12 +1044,12 @@ textarea.form-control:disabled {
 }
 
 .image-preview-container::-webkit-scrollbar-thumb {
-    background: rgba(43, 140, 255, 0.85);
+    background: rgba(0, 255, 102, 0.85);
     border-radius: 999px;
 }
 
 .image-preview-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(43, 140, 255, 1);
+    background: rgba(0, 255, 102, 1);
 }
 
 .upload-preview-media,
@@ -1076,11 +1110,11 @@ textarea.form-control:disabled {
     justify-content: center;
     text-align: center;
     padding: 2rem;
-    border: 1px dashed rgba(0, 212, 255, 0.18);
+    border: 1px dashed rgba(0, 255, 102, 0.18);
     border-radius: 18px;
     background:
-        radial-gradient(circle at top, rgba(0, 212, 255, 0.12), transparent 52%),
-        rgba(0, 212, 255, 0.04);
+        radial-gradient(circle at top, rgba(0, 255, 102, 0.12), transparent 52%),
+        rgba(0, 255, 102, 0.04);
 }
 
 .xray-state-card i {
@@ -1094,7 +1128,7 @@ textarea.form-control:disabled {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(0, 212, 255, 0.12);
+    background: rgba(0, 255, 102, 0.12);
     color: var(--primary);
     font-size: 1.9rem;
     animation: xrayPulse 1.8s ease-in-out infinite;
@@ -1138,8 +1172,8 @@ textarea.form-control:disabled {
     align-items: center;
     padding: 0.45rem 0.8rem;
     border-radius: 999px;
-    background: rgba(0, 212, 255, 0.09);
-    border: 1px solid rgba(0, 212, 255, 0.16);
+    background: rgba(0, 255, 102, 0.09);
+    border: 1px solid rgba(0, 255, 102, 0.16);
     color: var(--text-primary);
     font-size: 0.86rem;
     white-space: nowrap;
@@ -1179,9 +1213,9 @@ textarea.form-control:disabled {
 .xray-report-section {
     height: 100%;
     padding: 1.15rem;
-    border: 1px solid rgba(0, 212, 255, 0.12);
+    border: 1px solid rgba(0, 255, 102, 0.12);
     border-radius: 16px;
-    background: rgba(0, 212, 255, 0.04);
+    background: rgba(0, 255, 102, 0.04);
 }
 
 .xray-section-title {
@@ -1247,7 +1281,7 @@ textarea.form-control:disabled {
 .recent-xray-media {
     max-height: 220px;
     padding: 0.75rem;
-    border-color: rgba(0, 212, 255, 0.12);
+    border-color: rgba(0, 255, 102, 0.12);
 }
 
 .recent-xray-thumb {
@@ -1276,11 +1310,11 @@ textarea.form-control:disabled {
 @keyframes xrayPulse {
     0%, 100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.18);
+        box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.18);
     }
     50% {
         transform: scale(1.06);
-        box-shadow: 0 0 0 18px rgba(0, 212, 255, 0);
+        box-shadow: 0 0 0 18px rgba(0, 255, 102, 0);
     }
 }
 
@@ -1311,7 +1345,7 @@ textarea.form-control:disabled {
     max-height: 300px;
     overflow-y: auto;
     overflow-x: hidden;
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(0, 255, 102, 0.05);
     border-radius: 8px;
     padding: 1rem;
     display: flex;
@@ -1351,7 +1385,7 @@ textarea.form-control:disabled {
 
 .dashboard-summary-panel {
     min-height: 300px;
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(0, 255, 102, 0.05);
     border-radius: 8px;
     padding: 1rem;
 }
@@ -1376,7 +1410,7 @@ textarea.form-control:disabled {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(0, 212, 255, 0.14);
+    background: rgba(0, 255, 102, 0.14);
     color: var(--primary);
     font-weight: 800;
 }
@@ -1411,8 +1445,8 @@ textarea.form-control:disabled {
 }
 
 .alert-success {
-    background: rgba(0, 212, 255, 0.1);
-    border-color: rgba(0, 212, 255, 0.3);
+    background: rgba(0, 255, 102, 0.1);
+    border-color: rgba(0, 255, 102, 0.3);
     color: var(--primary);
 }
 
@@ -1485,7 +1519,7 @@ textarea.form-control:disabled {
 
 /* ===== Placeholder ===== */
 .placeholder-box {
-    background: rgba(0, 212, 255, 0.05);
+    background: rgba(0, 255, 102, 0.05);
     border: 1px dashed var(--border-color);
     border-radius: 8px;
     padding: 3rem;
@@ -1494,7 +1528,7 @@ textarea.form-control:disabled {
 }
 
 .placeholder-box:hover {
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(0, 255, 102, 0.1);
     border-color: var(--primary);
 }
 
@@ -1564,14 +1598,19 @@ textarea.form-control:disabled {
     }
 }
 
-/* ===== Dark Mode Toggle ===== */
+/* ===== Dark/Light Mode Toggle ===== */
 body.light-mode {
-    --bg-dark: #f8f9fa;
-    --bg-darker: #ffffff;
+    --bg-dark: #f0f7f3; /* very soft minty white */
+    --bg-darker: #e3ede7;
     --bg-card: rgba(255, 255, 255, 0.9);
-    --text-primary: #1a1a1a;
-    --text-secondary: #666666;
-    --border-color: rgba(0, 0, 0, 0.1);
+    --text-primary: #0a2416; /* deep forest green */
+    --text-secondary: #405c4d; /* mossy green */
+    --border-color: rgba(0, 168, 82, 0.18);
+    --primary: #00a852; /* darker emerald green for readability */
+    --primary-dark: #00803d;
+    --secondary: #0b6640;
+    --accent: #059669;
+    --shadow-md: 0 8px 32px rgba(0, 168, 82, 0.08);
 }
 
 body.light-mode,
@@ -1631,8 +1670,8 @@ body.light-mode .nav-link i {
 
 body.light-mode .nav-link:hover,
 body.light-mode .nav-link.active {
-    color: #006d8f;
-    background: rgba(0, 153, 204, 0.12);
+    color: #00a852;
+    background: rgba(0, 168, 82, 0.12);
 }
 
 body.light-mode .dashboard-card {
@@ -1728,15 +1767,15 @@ body.light-mode .medical-disclaimer {
 
 body.light-mode .upload-dropzone {
     background:
-        radial-gradient(circle at top right, rgba(0, 153, 204, 0.12), transparent 45%),
-        linear-gradient(180deg, rgba(0, 153, 204, 0.06) 0%, rgba(15, 23, 42, 0.02) 100%);
-    border-color: rgba(0, 153, 204, 0.24);
+        radial-gradient(circle at top right, rgba(0, 168, 82, 0.12), transparent 45%),
+        linear-gradient(180deg, rgba(0, 168, 82, 0.06) 0%, rgba(15, 23, 42, 0.02) 100%);
+    border-color: rgba(0, 168, 82, 0.24);
 }
 
 body.light-mode .upload-preview-card,
 body.light-mode .xray-report-section,
 body.light-mode .xray-state-card {
-    background: rgba(0, 153, 204, 0.04);
+    background: rgba(0, 168, 82, 0.04);
     border-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -1748,8 +1787,8 @@ body.light-mode .recent-xray-media {
 }
 
 body.light-mode .xray-meta-chip {
-    background: rgba(0, 153, 204, 0.08);
-    border-color: rgba(0, 153, 204, 0.14);
+    background: rgba(0, 168, 82, 0.08);
+    border-color: rgba(0, 168, 82, 0.14);
 }
 
 body.light-mode .severity-low {
@@ -1782,7 +1821,7 @@ body.light-mode .report-empty-card {
 body.light-mode .report-meta-card,
 body.light-mode .report-stat-card,
 body.light-mode .report-item {
-    background: rgba(0, 153, 204, 0.04);
+    background: rgba(0, 168, 82, 0.04);
     border-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -1797,12 +1836,12 @@ body.light-mode .report-stat-label {
 body.light-mode .report-stat-value,
 body.light-mode .report-meta-value,
 body.light-mode .report-section-title {
-    color: #006d8f;
+    color: #00a852;
 }
 
 body.light-mode .report-chip {
-    background: rgba(0, 153, 204, 0.08);
-    border-color: rgba(0, 153, 204, 0.14);
+    background: rgba(0, 168, 82, 0.08);
+    border-color: rgba(0, 168, 82, 0.14);
 }
 
 @media print {
@@ -1881,8 +1920,8 @@ body.light-mode .dropdown-menu-dark .dropdown-item {
 
 body.light-mode .dropdown-menu-dark .dropdown-item:hover,
 body.light-mode .dropdown-menu-dark .dropdown-item:focus {
-    background: rgba(0, 153, 204, 0.12);
-    color: #006d8f;
+    background: rgba(0, 168, 82, 0.12);
+    color: #00a852;
 }
 
 body.light-mode .dropdown-menu-dark .dropdown-divider {
@@ -1927,4 +1966,61 @@ body.light-mode .dropdown-menu-dark .dropdown-divider {
 
 .timeline-entry:last-child .timeline-content {
     border-left-color: transparent;
+}
+/* ===== Matrix Mint Extra Bootstrap Overrides ===== */
+.text-primary, .text-info {
+    color: var(--primary) !important;
+}
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+    border: none !important;
+    color: var(--bg-darker) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%) !important;
+    box-shadow: 0 0 15px var(--primary) !important;
+    color: var(--bg-darker) !important;
+}
+.btn-outline-primary {
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+.btn-outline-primary:hover {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: var(--bg-darker) !important;
+}
+.progress-bar.bg-success, .progress-bar.bg-info {
+    background-color: var(--primary) !important;
+}
+.navbar-brand i {
+    color: var(--primary) !important;
+}
+/* Ensure search suggest dropdown looks high tech */
+.symptom-suggestions {
+    background: var(--bg-darker) !important;
+    border: 1px solid var(--primary) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.2) !important;
+}
+.symptom-suggestion {
+    color: var(--text-primary) !important;
+}
+.symptom-suggestion:hover,
+.symptom-suggestion.active {
+    background: rgba(0, 255, 102, 0.15) !important;
+    color: var(--primary) !important;
+}
+body.light-mode .symptom-suggestions {
+    background: #ffffff !important;
+    border: 1px solid var(--primary) !important;
+}
+body.light-mode .symptom-suggestion {
+    color: var(--text-primary) !important;
+}
+body.light-mode .symptom-suggestion:hover,
+body.light-mode .symptom-suggestion.active {
+    background: rgba(0, 168, 82, 0.1) !important;
+    color: var(--primary) !important;
 }

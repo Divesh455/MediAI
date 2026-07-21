@@ -74,7 +74,7 @@ function normalizeProfile(profile) {
 }
 
 function getProfileImageSrc(profile) {
-    return profile.profile_image || '/placeholder-user.jpg';
+    return profile.profile_image || '/img/placeholder-user.jpg';
 }
 
 function renderProfile(profile) {
@@ -85,7 +85,7 @@ function renderProfile(profile) {
     profileElements.profileImage.alt = `${profile.name || 'Profile'} photo`;
     profileElements.profileImage.onerror = () => {
         profileElements.profileImage.onerror = null;
-        profileElements.profileImage.src = '/placeholder-user.jpg';
+        profileElements.profileImage.src = '/img/placeholder-user.jpg';
     };
 
     profileElements.firstName.value = profile.first_name || '';
